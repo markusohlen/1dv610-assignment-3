@@ -5,6 +5,7 @@ require_once('config/connect.php');
 
 // Models
 require_once('model/DatabaseModel.php');
+require_once('model/LoginModel.php');
 
 // Views
 require_once('view/LoginView.php');
@@ -18,13 +19,14 @@ error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 
 $dm = new \model\DatabaseModel();
+$lm = new \model\LoginModel();
 
-$lc = new \controller\LoginController();
-
-$v = new \view\LoginView($dm, $lc);
+$v = new \view\LoginView($dm);
 $dtv = new \view\DateTimeView();
 $lv = new \view\LayoutView();
 
+$lc = new \controller\LoginController($v, $lm);
 
+$lc->login();
 
 $lv->render(false, $v, $dtv, $lc);

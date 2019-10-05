@@ -13,11 +13,9 @@ class LoginView {
 	private static $messageId = 'LoginView::Message';
 
 	private $db;
-	private $controller;
 
-	public function __construct($db, $lc) {
+	public function __construct($db) {
 		$this->db = $db;
-		$this->controller = $lc;
 	}
 
 	/**
@@ -29,9 +27,10 @@ class LoginView {
 	 */
 	public function response() {
 		$message = $this->db->findUser('Admin');
+
 		
 		$response = $this->generateLoginFormHTML($message);
-		$response .= $this->generateLogoutButtonHTML($message);
+		// $response .= $this->generateLogoutButtonHTML($message);
 		return $response;
 	}
 
@@ -76,9 +75,36 @@ class LoginView {
 		';
 	}
 	
-	//CREATE GET-FUNCTIONS TO FETCH REQUEST VARIABLES
-	private function getRequestUserName() {
-		//RETURN REQUEST VARIABLE: USERNAME
+	public function getRequestUsername() {
+		return $_POST[self::$name];
+	}
+
+	public function getRequestPassword() {
+		return $_POST[self::$password];
 	}
 	
+	public function userPressedLogin() {
+		if (isset($_POST[self::$login])) {
+			return true;
+		}
+		return false;
+	}
+
+	public function userFilledInUsername() {
+		if (isset($_POST[self::$name]) && empty($_POST[self::$name]) === false) {
+			return true;
+		}
+		return false;
+	}
+
+	public function userFilledInPassword() {
+		if (isset($_POST[self::$password]) && empty($_POST[self::$password]) === false) {
+			return true;
+		}
+		return false;
+	}
+
+	public function generateStatusMessage() {
+		
+	}
 }
