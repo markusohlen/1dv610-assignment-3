@@ -18,14 +18,14 @@ require_once('controller/LoginController.php');
 error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 
-$dm = new \model\DatabaseModel();
+$dbm = new \model\DatabaseModel();
 $lm = new \model\LoginModel();
 
-$v = new \view\LoginView($dm);
+$v = new \view\LoginView($dbm);
 $dtv = new \view\DateTimeView();
 $lv = new \view\LayoutView();
 
-$lc = new \controller\LoginController($v, $lm);
+$lc = new \controller\LoginController($v, $lm, $dbm);
 
 $lc->login();
 

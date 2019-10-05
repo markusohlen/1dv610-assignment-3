@@ -10,18 +10,20 @@ class DatabaseModel {
     private static $dbhost = 'DB_HOST';
     private static $dbuser = 'DB_USERNAME';
     private static $dbpassword = 'DB_PASSWORD';
-    private static $dbtable = 'DB_NAME';
+    private static $dbname = 'DB_NAME';
+    private static $dbtable = 'DB_TABLE';
 
     private function fetchUsers() {
         $users = array();
 
-        $conn = new \mysqli($_ENV[self::$dbhost], $_ENV[self::$dbuser], $_ENV[self::$dbpassword], $_ENV[self::$dbtable]);
+        $conn = new \mysqli($_ENV[self::$dbhost], $_ENV[self::$dbuser], $_ENV[self::$dbpassword], $_ENV[self::$dbname]);
 
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         } 
         
-        $sql = "SELECT * FROM assignment3";
+        $table = $_ENV[self::$dbtable];
+        $sql = "SELECT * FROM $table";
 
         $result = $conn->query($sql);
 
@@ -39,12 +41,33 @@ class DatabaseModel {
         return $users;
     }
 
-    public function findUser($username) {
+    public function userExists($username) {
         foreach ($this->fetchUsers() as $user) {         
             if ($user->username === $username) {
                 return true;
             }
         }
+        return false;
+    }
+
+    public function passwordMatch($username, $password) {
+        $user = null;
+        $users = $this->fetchUsers();
+
+        foreach ($users as $u) {
+            if ($u->username === $username) {
+                $user = $u;
+            }
+        }
+
+        if ($user === null) {
+            return false;
+        }
+
+        if ($user->password === $password) {
+            return true;
+        }
+        
         return false;
     }
 }
