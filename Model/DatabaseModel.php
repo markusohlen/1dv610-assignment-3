@@ -13,7 +13,7 @@ class DatabaseModel {
     private static $dbname = 'DB_NAME';
     private static $dbtable = 'DB_TABLE';
 
-    private function fetchUsers() {
+    private function fetchUsers() : array {
         $users = array();
 
         $conn = new \mysqli($_ENV[self::$dbhost], $_ENV[self::$dbuser], $_ENV[self::$dbpassword], $_ENV[self::$dbname]);
@@ -41,7 +41,7 @@ class DatabaseModel {
         return $users;
     }
 
-    public function userExists($username) {
+    public function userExists($username) : bool {
         foreach ($this->fetchUsers() as $user) {         
             if ($user->username === $username) {
                 return true;
@@ -50,7 +50,7 @@ class DatabaseModel {
         return false;
     }
 
-    public function passwordMatch($username, $password) {
+    public function passwordMatch($username, $password) : bool {
         $user = null;
         $users = $this->fetchUsers();
 
@@ -67,7 +67,7 @@ class DatabaseModel {
         if ($user->password === $password) {
             return true;
         }
-        
+
         return false;
     }
 }

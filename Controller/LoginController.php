@@ -14,7 +14,7 @@ class LoginController
         $this->dbModel = $dbm;
     }
 
-    public function login() {
+    public function login() : void {
         if ($this->view->userPressedLogin() === false) {
             return;
         }

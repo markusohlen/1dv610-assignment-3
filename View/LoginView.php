@@ -25,9 +25,9 @@ class LoginView {
 	 *
 	 * Should be called after a login attempt has been determined
 	 *
-	 * @return  void BUT writes to standard output and cookies!
+	 * @return string BUT writes to standard output and cookies!
 	 */
-	public function response() {
+	public function response() : string {
 		$response = $this->generateLoginFormHTML();
 		// $response .= $this->generateLogoutButtonHTML();
 		return $response;
@@ -35,9 +35,9 @@ class LoginView {
 
 	/**
 	* Generate HTML code on the output buffer for the logout button
-	* @return  void, BUT writes to standard output!
+	* @return string BUT writes to standard output!
 	*/
-	private function generateLogoutButtonHTML() {
+	private function generateLogoutButtonHTML() : string {
 		return '
 			<form  method="post" >
 				<p id="' . self::$messageId . '">' . $this->message .'</p>
@@ -48,9 +48,9 @@ class LoginView {
 	
 	/**
 	* Generate HTML code on the output buffer for the logout button
-	* @return  void, BUT writes to standard output!
+	* @return , BUT writes to standard output!
 	*/
-	private function generateLoginFormHTML() {
+	private function generateLoginFormHTML() : string {
 		return '
 			<form method="post" > 
 				<fieldset>
@@ -72,40 +72,40 @@ class LoginView {
 		';
 	}
 	
-	public function getRequestUsername() {
+	public function getRequestUsername() : string {
 		return $_POST[self::$name];
 	}
 
-	public function getRequestPassword() {
+	public function getRequestPassword() : string {
 		return $_POST[self::$password];
 	}
 	
-	public function userPressedLogin() {
+	public function userPressedLogin() : bool {
 		if (isset($_POST[self::$login])) {
 			return true;
 		}
 		return false;
 	}
 
-	private function userFilledInUsername() {
+	private function userFilledInUsername() : bool {
 		if (isset($_POST[self::$name]) && empty($_POST[self::$name]) === false) {
 			return true;
 		}
 		return false;
 	}
 
-	private function userFilledInPassword() {
+	private function userFilledInPassword() : bool {
 		if (isset($_POST[self::$password]) && empty($_POST[self::$password]) === false) {
 			return true;
 		}
 		return false;
 	}
 
-	public function userFilledInCredentials() {
+	public function userFilledInCredentials() : bool {
 		return $this->userFilledInUsername() && $this->userFilledInPassword();
 	}
 
-	public function generateMissingCredentialsMessage() {
+	public function generateMissingCredentialsMessage() : void {
 
 		if ($this->userFilledInUsername() === false) {
 			$this->message .= "Username missing  <br>";
