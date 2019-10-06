@@ -7,36 +7,47 @@ class LoginController
     private $view;
     private $model;
     private $dbModel;
+    private $session;
 
-    public function __construct($lv, $lm, $dbm) {
+    public function __construct($lv, $lm, $dbm, $sm) {
         $this->view = $lv;
         $this->model = $lm;
         $this->dbModel = $dbm;
+        $this->session = $sm;
     }
 
     public function login() : void {
+        if ($this->view->userPressedLogout() === true) {
+            $this->doLogout();
+            return;
+        }
+
         if ($this->view->userPressedLogin() === false) {
             return;
         }
 
         if ($this->view->userFilledInCredentials() === false) {
-            $this->view->generateMissingCredentialsMessage();
+            $this->view->setMissingCredentialsMessage();
             return;
         }
 
         $username = $this->view->getRequestUsername();
         $password = $this->view->getRequestPassword();
         
-        if ($this->dbModel->userExists($username) === true && $this->dbModel->passwordMatch($username, $password) == true) {
+        if ($this->dbModel->userExists($username) === true && $this->dbModel->passwordMatch($username, $password) === true) {
             $this->doLogin();
         } else {
-            $this->view->generateIncorrectCredentialsMessage();
+            $this->view->setIncorrectCredentialsMessage();
             return;
         }
     }
 
     private function doLogin() : void {
-        echo "HITTADE ANVÄNDARE!<br>";
-        echo "RÄTT LÖSEN OCKSÅ!";
+        $this->view->setWelcomeMessage();
+        $this->session->setLoggedIn();
+    }
+
+    private function doLogout() : void {
+        $this->session->setLoggedOut();
     }
 }

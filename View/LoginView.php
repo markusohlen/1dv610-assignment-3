@@ -27,9 +27,14 @@ class LoginView {
 	 *
 	 * @return string BUT writes to standard output and cookies!
 	 */
-	public function response() : string {
-		$response = $this->generateLoginFormHTML();
-		// $response .= $this->generateLogoutButtonHTML();
+	public function response(bool $isLoggedIn) : string {
+		if ($isLoggedIn === true) {
+			$response = $this->generateLogoutButtonHTML();
+		}
+		else {
+			$response = $this->generateLoginFormHTML();
+		}
+
 		return $response;
 	}
 
@@ -87,6 +92,13 @@ class LoginView {
 		return false;
 	}
 
+	public function userPressedLogout() : bool {
+		if (isset($_POST[self::$logout])) {
+			return true;
+		}
+		return false;
+	}
+
 	private function userFilledInUsername() : bool {
 		if (isset($_POST[self::$name]) && empty($_POST[self::$name]) === false) {
 			return true;
@@ -105,7 +117,7 @@ class LoginView {
 		return $this->userFilledInUsername() && $this->userFilledInPassword();
 	}
 
-	public function generateMissingCredentialsMessage() : void {
+	public function setMissingCredentialsMessage() : void {
 
 		if ($this->userFilledInUsername() === false) {
 			$this->message .= "Username missing  <br>";
@@ -116,7 +128,11 @@ class LoginView {
 		}
 	}
 
-	public function generateIncorrectCredentialsMessage() : void {
+	public function setIncorrectCredentialsMessage() : void {
 		$this->message .= "Incorrect username or password <br>";
+	}
+
+	public function setWelcomeMessage() : void {
+		$this->message .= "Welcome <br>";
 	}
 }
