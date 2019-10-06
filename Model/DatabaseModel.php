@@ -11,28 +11,33 @@ class DatabaseModel {
     private static $dbuser = 'DB_USERNAME';
     private static $dbpassword = 'DB_PASSWORD';
     private static $dbname = 'DB_NAME';
+    private static $dbport = 'DB_PORT';
     private static $dbtable = 'DB_TABLE';
 
     private function fetchUsers() : array {
         $users = array();
 
-        $conn = new \mysqli($_ENV[self::$dbhost], $_ENV[self::$dbuser], $_ENV[self::$dbpassword], $_ENV[self::$dbname]);
-
+        // $conn = new \mysqli($_ENV[self::$dbhost], $_ENV[self::$dbuser], $_ENV[self::$dbpassword], $_ENV[self::$dbname], $_ENV[self::$dbport]);
+        $conn = new \mysqli(getenv(self::$dbhost), getenv(self::$dbuser), getenv(self::$dbpassword), getenv(self::$dbname), getenv(self::$dbport));
+        
+        
+        
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         } 
         
-        $table = $_ENV[self::$dbtable];
+        // $table = $_ENV[self::$dbtable];
+        $table = getenv(self::$dbtable);
         $sql = "SELECT * FROM $table";
 
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
-                $obj2 = new \stdClass();
-                $obj2->username = $row["username"];
-                $obj2->password = $row["password"];
-                array_push($users, $obj2);
+                $userCred = new \stdClass();
+                $userCred->username = $row[self::$username];
+                $userCred->password = $row[self::$password];
+                array_push($users, $userCred);
             }
         }
 
