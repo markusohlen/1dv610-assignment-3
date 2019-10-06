@@ -114,6 +114,9 @@ class LoginView {
 		if ($this->userFilledInPassword() === false) {
 			$this->message .= "Password missing <br>";
 		}
-	
+	}
+
+	public function generateIncorrectCredentialsMessage() : void {
+		$this->message .= "Incorrect username or password <br>";
 	}
 }

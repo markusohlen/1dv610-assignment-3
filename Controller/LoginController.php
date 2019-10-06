@@ -27,11 +27,16 @@ class LoginController
         $username = $this->view->getRequestUsername();
         $password = $this->view->getRequestPassword();
         
-        if ($this->dbModel->userExists($username) === true) {
-            echo "HITTADE ANVÄNDARE!<br>";
-            if ($this->dbModel->passwordMatch($username, $password)) {
-                echo "RÄTT LÖSEN OCKSÅ!";
-            }
+        if ($this->dbModel->userExists($username) === true && $this->dbModel->passwordMatch($username, $password) == true) {
+            $this->doLogin();
+        } else {
+            $this->view->generateIncorrectCredentialsMessage();
+            return;
         }
+    }
+
+    private function doLogin() : void {
+        echo "HITTADE ANVÄNDARE!<br>";
+        echo "RÄTT LÖSEN OCKSÅ!";
     }
 }
