@@ -1,7 +1,7 @@
 <?php
 
 // Config
-require_once('config/connect.php');
+// require_once('config/connect.php');
 
 // Models
 require_once('model/DatabaseModel.php');
