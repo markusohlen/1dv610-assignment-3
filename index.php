@@ -12,6 +12,7 @@ require_once('model/SessionModel.php');
 require_once('view/LoginView.php');
 require_once('view/DateTimeView.php');
 require_once('view/LayoutView.php');
+require_once('view/RegisterView.php');
 
 // Controllers
 require_once('controller/LoginController.php');
@@ -28,11 +29,12 @@ $sm = new \model\SessionModel();
 $v = new \view\LoginView($dbm);
 $dtv = new \view\DateTimeView();
 $lv = new \view\LayoutView();
+$rv = new \view\RegisterView();
 
 $lc = new \controller\LoginController($v, $lm, $dbm, $sm);
 
 $lc->login();
 
-$lv->render($sm->getLoggedIn(), $v, $dtv, $lc);
+$lv->render($sm->getLoggedIn(), $v, $dtv, $lc, $rv);
 
 var_dump($_SESSION);

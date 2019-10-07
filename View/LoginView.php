@@ -62,6 +62,7 @@ class LoginView {
 		}
 
 		return '
+		<a href="?register">Register a new user</a>
 			<form method="post" > 
 				<fieldset>
 					<legend>Login - enter Username and password</legend>

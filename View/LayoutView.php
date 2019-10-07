@@ -3,8 +3,11 @@
 namespace view;
 
 class LayoutView {
+  private static $register = "register";
   
-  public function render($isLoggedIn, LoginView $v, DateTimeView $dtv, $lc) : void {
+  public function render($isLoggedIn, LoginView $v, DateTimeView $dtv, $lc, $rv) : void {
+    $view = $this->decideView($v, $rv);
+
     echo '<!DOCTYPE html>
       <html>
         <head>
@@ -16,13 +19,23 @@ class LayoutView {
           ' . $this->renderIsLoggedIn($isLoggedIn) . '
           
           <div class="container">
-              ' . $v->response($isLoggedIn) . '
+              ' . $view->response($isLoggedIn) . '
               
               ' . $dtv->show() . '
           </div>
          </body>
       </html>
     ';
+  }
+
+  private function decideView($v, $rv) {
+    $view = $v;
+    
+    if (isset($_GET[self::$register])) {
+      $view = $rv;
+    }
+
+    return $view;
   }
   
   private function renderIsLoggedIn($isLoggedIn) : string {
