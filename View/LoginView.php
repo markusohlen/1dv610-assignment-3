@@ -56,6 +56,11 @@ class LoginView {
 	* @return , BUT writes to standard output!
 	*/
 	private function generateLoginFormHTML() : string {
+		$currentUsername = "";
+		if ($this->userPressedLogin() === true) {
+			$currentUsername = $this->getRequestUsername();
+		}
+
 		return '
 			<form method="post" > 
 				<fieldset>
@@ -63,7 +68,7 @@ class LoginView {
 					<p id="' . self::$messageId . '">' . $this->message . '</p>
 					
 					<label for="' . self::$name . '">Username :</label>
-					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="" />
+					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="'. $currentUsername .'" />
 
 					<label for="' . self::$password . '">Password :</label>
 					<input type="password" id="' . self::$password . '" name="' . self::$password . '" />
@@ -120,19 +125,18 @@ class LoginView {
 	public function setMissingCredentialsMessage() : void {
 
 		if ($this->userFilledInUsername() === false) {
-			$this->message .= "Username missing  <br>";
+			$this->message .= "Username is missing";
 		}
-
-		if ($this->userFilledInPassword() === false) {
-			$this->message .= "Password missing <br>";
+		else {
+			$this->message .= "Password is missing";
 		}
 	}
 
 	public function setIncorrectCredentialsMessage() : void {
-		$this->message .= "Incorrect username or password <br>";
+		$this->message .= "Wrong name or password <br>";
 	}
 
 	public function setWelcomeMessage() : void {
-		$this->message .= "Welcome <br>";
+		$this->message .= "Welcome";
 	}
 }
