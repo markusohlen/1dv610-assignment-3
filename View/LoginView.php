@@ -125,18 +125,22 @@ class LoginView {
 	public function setMissingCredentialsMessage() : void {
 
 		if ($this->userFilledInUsername() === false) {
-			$this->message .= "Username is missing";
+			$this->message = "Username is missing";
 		}
 		else {
-			$this->message .= "Password is missing";
+			$this->message = "Password is missing";
 		}
 	}
 
 	public function setIncorrectCredentialsMessage() : void {
-		$this->message .= "Wrong name or password <br>";
+		$this->message = "Wrong name or password <br>";
 	}
 
 	public function setWelcomeMessage() : void {
-		$this->message .= "Welcome";
+		$this->message = "Welcome";
+	}
+
+	public function setLogoutMessage() : void {
+		$this->message = "Bye bye!";
 	}
 }

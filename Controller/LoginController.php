@@ -17,7 +17,7 @@ class LoginController
     }
 
     public function login() : void {
-        if ($this->view->userPressedLogout() === true) {
+        if ($this->view->userPressedLogout() === true && $this->session->getLoggedIn() === true) {
             $this->doLogout();
             return;
         }
@@ -48,6 +48,7 @@ class LoginController
     }
 
     private function doLogout() : void {
+        $this->view->setLogoutMessage();
         $this->session->setLoggedOut();
     }
 }
