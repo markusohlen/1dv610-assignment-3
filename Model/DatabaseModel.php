@@ -17,17 +17,14 @@ class DatabaseModel {
     private function fetchUsers() : array {
         $users = array();
 
-        // $conn = new \mysqli($_ENV[self::$dbhost], $_ENV[self::$dbuser], $_ENV[self::$dbpassword], $_ENV[self::$dbname], $_ENV[self::$dbport]);
         $conn = new \mysqli(getenv(self::$dbhost), getenv(self::$dbuser), getenv(self::$dbpassword), getenv(self::$dbname), getenv(self::$dbport));
-        
-        
         
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         } 
         
-        // $table = $_ENV[self::$dbtable];
         $table = getenv(self::$dbtable);
+        
         $sql = "SELECT * FROM $table";
 
         $result = $conn->query($sql);
