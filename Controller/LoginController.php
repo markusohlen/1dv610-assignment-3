@@ -16,7 +16,8 @@ class LoginController
         $this->session = $sm;
     }
 
-    public function login() : void {
+    public function start() : void {
+        echo "SADASDASDASDASDASD";
         if ($this->view->userPressedLogout() === true && $this->session->getLoggedIn() === true) {
             $this->doLogout();
             return;

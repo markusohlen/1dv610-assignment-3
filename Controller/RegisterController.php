@@ -17,7 +17,7 @@ class RegisterController {
         $this->dbModel = $dbm;
     }
 
-    public function register() {
+    public function start() {
         if ($this->view->userPressedRegister() === false) {
             return;
         }

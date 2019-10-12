@@ -3,10 +3,8 @@
 namespace view;
 
 class LayoutView {
-  private static $register = "register";
-  
-  public function render($isLoggedIn, LoginView $v, DateTimeView $dtv, $lc, $rv) : void {
-    $view = $this->decideView($v, $rv);
+
+    public function render($isLoggedIn, DateTimeView $dtv, $view) : void {
 
     echo '<!DOCTYPE html>
       <html>
@@ -28,16 +26,6 @@ class LayoutView {
     ';
   }
 
-  private function decideView($v, $rv) {
-    $view = $v;
-    
-    if (isset($_GET[self::$register])) {
-      $view = $rv;
-    }
-
-    return $view;
-  }
-  
   private function renderIsLoggedIn($isLoggedIn) : string {
     if ($isLoggedIn) {
       return '<h2>Logged in</h2>';

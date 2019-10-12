@@ -10,7 +10,15 @@ class RegisterView {
 	private static $passwordRepeat = "RegisterView::PasswordRepeat";
 	
 	private $message = '';
-	
+    
+    public function pressedRegister()
+	{
+		if (isset($_GET["register"])) {
+			return true;
+		}
+		return false;
+    }
+    
 	public function setMessage($msg) {
 		$this->message = $msg;
 	}

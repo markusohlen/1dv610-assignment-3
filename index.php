@@ -19,29 +19,13 @@ require_once('view/RegisterView.php');
 // Controllers
 require_once('controller/LoginController.php');
 require_once('controller/RegisterController.php');
+require_once('controller/MainController.php');
 
 error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 
 session_start();
 
-$dbm = new \model\DatabaseModel();
-$lm = new \model\LoginModel();
-$sm = new \model\SessionModel();
-$rm = new \model\RegisterModel();
+$mc = new \controller\MainController();
 
-$v = new \view\LoginView($dbm);
-$rv = new \view\RegisterView($dbm);
-$dtv = new \view\DateTimeView();
-$lv = new \view\LayoutView();
-$rv = new \view\RegisterView();
-
-$lc = new \controller\LoginController($v, $lm, $dbm, $sm);
-$rc = new \controller\RegisterController($rv, $rm, $dbm);
-
-$lc->login();
-$rc->register();
-
-$lv->render($sm->getLoggedIn(), $v, $dtv, $lc, $rv);
-
-var_dump($_SESSION);
+$mc->renderView();

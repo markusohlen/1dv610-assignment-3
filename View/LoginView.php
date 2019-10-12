@@ -16,8 +16,8 @@ class LoginView {
 
 	private $message = "";
 
-	public function __construct($db) {
-		$this->db = $db;
+	public function __construct() {
+		$this->db = new \model\DatabaseModel();
 	}
 
 	/**
