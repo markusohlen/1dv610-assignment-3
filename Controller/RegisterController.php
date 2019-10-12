@@ -32,6 +32,8 @@ class RegisterController {
         if ($this->hasInvalidCredentials() === true) {
             return;
         }
+
+        $this->dbModel->registerUser($this->username, $this->password);
     }
 
     private function hasInvalidCredentials() {

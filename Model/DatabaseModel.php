@@ -72,4 +72,30 @@ class DatabaseModel {
 
         return false;
     }
+
+    public function registerUser(string $username, string $password) : void {
+        $conn = new \mysqli(getenv(self::$dbhost), getenv(self::$dbuser), getenv(self::$dbpassword), getenv(self::$dbname), getenv(self::$dbport));
+        
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        } 
+        
+        $table = getenv(self::$dbtable);
+
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        } 
+        $sql = "INSERT INTO $table (username, password)
+            VALUES ('$username', '$password')";
+        
+        $conn->query($sql);
+        
+        // if ($conn->query($sql) === TRUE) {
+        //     echo "New record created successfully";
+        // } else {
+        //     echo "Error: " . $sql . "<br>" . $conn->error;
+        // }
+
+        $conn->close();
+    }
 }
