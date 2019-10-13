@@ -11,9 +11,9 @@ class RegisterController {
     private $password;
     private $passwordRepeat;
 
-    public function __construct($rv, $rm, $dbm) {
+    public function __construct($rv, $dbm) {
         $this->view = $rv;
-        $this->model = $rm;
+        $this->model = new \model\RegisterModel();
         $this->dbModel = $dbm;
     }
 

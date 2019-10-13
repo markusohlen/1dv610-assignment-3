@@ -9,15 +9,14 @@ class LoginController
     private $dbModel;
     private $session;
 
-    public function __construct($lv, $lm, $dbm, $sm) {
+    public function __construct($lv, $dbm, $sm) {
         $this->view = $lv;
-        $this->model = $lm;
+        $this->model = new \model\LoginModel();
         $this->dbModel = $dbm;
         $this->session = $sm;
     }
 
     public function start() : void {
-        echo "SADASDASDASDASDASD";
         if ($this->view->userPressedLogout() === true && $this->session->getLoggedIn() === true) {
             $this->doLogout();
             return;

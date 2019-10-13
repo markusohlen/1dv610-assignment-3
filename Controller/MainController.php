@@ -13,6 +13,7 @@ class MainController
     private $rc;
 
     private $sm;
+    private $dm;
 
     public function __construct()
     {
@@ -22,14 +23,11 @@ class MainController
         $this->v = new \view\LayoutView();
 
         $this->sm = new \model\SessionModel();
+        $this->dm = new \model\DatabaseModel();
 
-        $this->lc = new \controller\LoginController($this->lv,
-        new \model\LoginModel(),
-        new \model\DatabaseModel(),
-        new \model\SessionModel());
-        $this->rc = new \controller\RegisterController($this->rv,
-        new \model\RegisterModel(),
-        new \model\DatabaseModel());
+        $this->lc = new \controller\LoginController($this->lv, $this->dm, $this->sm);
+        
+        $this->rc = new \controller\RegisterController($this->rv, $this->dm);
     }
 
     public function renderView() : void
@@ -53,10 +51,6 @@ class MainController
         {
             return $this->rv;
         }
-        else if (false) 
-        {
-            echo "Hello from login";
-        }
         else
         {
             return $this->lv;
@@ -65,17 +59,13 @@ class MainController
 
     private function decideController($view)
     {
-        if ($view instanceof $this->lv)
-        {
-            return $this->lc;
-        }
-        else if ($view instanceof $this->rv) 
+        if ($view instanceof $this->rv)
         {
             return $this->rc;
         }
         else
-        {
-            return "FEL";
+        { 
+            return $this->lc;
         }
     }
 }
