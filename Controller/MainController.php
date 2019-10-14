@@ -17,10 +17,12 @@ class MainController
 
     public function __construct()
     {
-        $this->lv = new \view\LoginView();
+        $this->cv = new \view\CalendarView();
+        $this->lv = new \view\LoginView($this->cv);
         $this->rv = new \view\RegisterView();
         $this->dtv = new \view\DateTimeView();
         $this->v = new \view\LayoutView();
+        
 
         $this->sm = new \model\SessionModel();
         $this->dm = new \model\DatabaseModel();
@@ -29,6 +31,7 @@ class MainController
         
         $this->rc = new \controller\RegisterController($this->rv, $this->dm);
     }
+
 
     public function renderView() : void
     {
@@ -40,10 +43,12 @@ class MainController
         $this->v->render($this->sm->getLoggedIn(), $this->dtv, $view);
     }
 
+
     private function runController($controller)
     {
         $controller->start();
     }
+
 
     private function decideView()
     {
@@ -51,11 +56,16 @@ class MainController
         {
             return $this->rv;
         }
+        // else if ($this->cv->wantsToShowCalendarPage() === true && $this->sm->getLoggedIn() === true)
+        // {
+        //     return $this->cv;
+        // }
         else
         {
             return $this->lv;
         }
     }
+
 
     private function decideController($view)
     {

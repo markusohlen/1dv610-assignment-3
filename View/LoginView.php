@@ -16,8 +16,9 @@ class LoginView {
 
 	private $message = "";
 
-	public function __construct() {
+	public function __construct($cv) {
 		$this->db = new \model\DatabaseModel();
+		$this->cv = $cv;
 	}
 
 	/**
@@ -30,6 +31,7 @@ class LoginView {
 	public function response(bool $isLoggedIn) : string {
 		if ($isLoggedIn === true) {
 			$response = $this->generateLogoutButtonHTML();
+			$response .= $this->cv->response();
 		}
 		else {
 			$response = $this->generateLoginFormHTML();
