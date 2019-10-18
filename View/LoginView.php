@@ -121,38 +121,19 @@ class LoginView
 		return false;
 	}
 
-	private function userFilledInUsername() : bool 
+	public function getUserCredentials() : \model\User
 	{
-		if (isset($_POST[self::$name]) && empty($_POST[self::$name]) === false) 
-		{
-			return true;
-		}
-		return false;
+		return new \model\User($this->getRequestUsername(), $this->getRequestPassword());
 	}
 
-	private function userFilledInPassword() : bool 
+	public function setMissingUsernameMessage() : void
 	{
-		if (isset($_POST[self::$password]) && empty($_POST[self::$password]) === false) 
-		{
-			return true;
-		}
-		return false;
+		$this->message = "Username is missing";
 	}
 
-	// public function getUserCredentials() :  
-	// {
-	// 	return 
-	// }
-
-	public function setMissingCredentialsMessage() : void 
+	public function setMissingPasswordMessage() : void
 	{
-
-		if ($this->userFilledInUsername() === false) {
-			$this->message = "Username is missing";
-		}
-		else {
-			$this->message = "Password is missing";
-		}
+		$this->message = "Password is missing";
 	}
 
 	public function setIncorrectCredentialsMessage() : void 

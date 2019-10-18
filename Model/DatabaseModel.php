@@ -36,9 +36,11 @@ class DatabaseModel
         {
             while($row = $result->fetch_assoc()) 
             {
-                $userCred = new \stdClass();
-                $userCred->username = $row[self::$username];
-                $userCred->password = $row[self::$password];
+                $username = $row[self::$username];
+                $password = $row[self::$password];
+
+                $userCred = new \model\User($username, $password);
+
                 array_push($users, $userCred);
             }
         }
