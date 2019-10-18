@@ -12,10 +12,6 @@ require_once('model/RegisterModel.php');
 require_once('model/UserModel.php');
 
 // Require exceptions
-require_once('model/PasswordsDoNotMatchException.php');
-require_once('model/UsernameTooShortException.php');
-require_once('model/PasswordsTooShortException.php');
-require_once('model/UserAlreadyExistsException.php');
 require_once('model/Exceptions.php');
 
 // Views
