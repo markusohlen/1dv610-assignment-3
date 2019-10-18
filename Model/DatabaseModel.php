@@ -73,7 +73,7 @@ class DatabaseModel {
         return false;
     }
 
-    public function registerUser(string $username, string $password) : void {
+    public function registerUser(\model\UserModel $user) : void {
         $conn = new \mysqli(getenv(self::$dbhost), getenv(self::$dbuser), getenv(self::$dbpassword), getenv(self::$dbname), getenv(self::$dbport));
         
         if ($conn->connect_error) {
@@ -82,9 +82,9 @@ class DatabaseModel {
         
         $table = getenv(self::$dbtable);
 
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        } 
+        $username = $user->getUsername();
+        $password = $user->getPassword();
+
         $sql = "INSERT INTO $table (username, password)
             VALUES ('$username', '$password')";
         

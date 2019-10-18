@@ -83,15 +83,20 @@ class RegisterView {
         return false;
     }
 
-    public function getRequestUsername() {
+    public function getUserCredentials() : \model\UserModel
+    {
+        return new \model\UserModel($this->getRequestUsername(), $this->getRequestPassword(), $this->getRequestPasswordRepeat());
+    }
+
+    private function getRequestUsername() {
         return $_POST[self::$username];
     }
 
-    public function getRequestPassword() {
+    private function getRequestPassword() {
         return $_POST[self::$password];
     }
 
-    public function getRequestPasswordRepeat() {
+    private function getRequestPasswordRepeat() {
         return $_POST[self::$passwordRepeat];
     }
 

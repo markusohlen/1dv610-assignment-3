@@ -18,52 +18,43 @@ class RegisterController {
     }
 
     public function start() {
+        // if ($this->view->userPressedRegister() === false) {
+        //     return;
+        // }
+
+        // $this->setCredentials();
+
+        // if ($this->hasInvalidCredentials() === true) {
+        //     return;
+        // }
+
+        // $this->dbModel->registerUser($this->username, $this->password);
         if ($this->view->userPressedRegister() === false) {
             return;
         }
 
-        // if ($this->view->userFilledInCredentials() === false) {
-        //     // $this->view->setMissingCredentialsMessage();
-        //     return;
-        // }
+        try {
+            $this->user = $this->view->getUserCredentials();
 
-        $this->setCredentials();
+            $this->user->passwordsMatch();
+            $this->user->usernameIsValid();
+            $this->user->passwordsIsTooShort();
 
-        if ($this->hasInvalidCredentials() === true) {
-            return;
-        }
+            if ($this->dbModel->userExists($this->user->getUsername()) === true)
+            {
+                throw new \model\UserAlreadyExistsException();
+            }
 
-        $this->dbModel->registerUser($this->username, $this->password);
-    }
-
-    private function hasInvalidCredentials() {
-        $hasInvalidCreddentials = false;
-        if ($this->model->usernameIsValid($this->username) === false) {
-            $this->view->setInvalidUsernameMessage();
-            $hasInvalidCreddentials = true;
-        }
-
-        if ($this->model->passwordsIsTooShort($this->password, $this->passwordRepeat)) {
-            $this->view->setPasswordTooShortMessage();
-            $hasInvalidCreddentials = true;
-        }
-
-        if ($this->dbModel->userExists($this->username)) {
-            $this->view->setUsernameExistsMessage();
-            $hasInvalidCreddentials = true;
-        }
-
-        if ($this->model->passwordsMatch($this->password, $this->passwordRepeat) === false) {
+        } catch (\model\PasswordsDoNotMatchException $e) {
             $this->view->setPasswordsDoNotMatchMessage();
-            $hasInvalidCreddentials = true;
+        } catch (\model\UsernameTooShortException $e) {
+            $this->view->setInvalidUsernameMessage();
+        } catch (\model\PasswordsTooShortException $e) {
+            $this->view->setPasswordTooShortMessage();
+        } catch (\model\UserAlreadyExistsException $e) {
+            $this->view->setUsernameExistsMessage();
         }
-
-        return $hasInvalidCreddentials;
-    }
-
-    private function setCredentials() {
-        $this->username = $this->view->getRequestUsername();
-        $this->password = $this->view->getRequestPassword();
-        $this->passwordRepeat = $this->view->getRequestPasswordRepeat();
+        
+        $this->dbModel->registerUser($this->user);
     }
 }
