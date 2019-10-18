@@ -1,5 +1,5 @@
 <?php
 
-namespace model;
+// namespace model;
 
-class PasswordsDoNotMatchException extends \Exception {}
+// class PasswordsDoNotMatchException extends \Exception {}

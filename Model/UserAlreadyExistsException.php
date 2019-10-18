@@ -1,5 +1,5 @@
 <?php
 
-namespace model;
+// namespace model;
 
-class UserAlreadyExistsException extends \Exception {}
+// class UserAlreadyExistsException extends \Exception {}

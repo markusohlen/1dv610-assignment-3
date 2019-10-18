@@ -1,5 +1,5 @@
 <?php
 
-namespace model;
+// namespace model;
 
-class PasswordsTooShortException extends \Exception {}
+// class PasswordsTooShortException extends \Exception {}
