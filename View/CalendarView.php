@@ -16,7 +16,8 @@ class CalendarView
 	 *
 	 * @return string BUT writes to standard output and cookies!
 	 */
-	public function response() : string {
+    public function response() : string 
+    {
         $response = $this->generateCalendarHTML();
 
         // $response .= $this->generateLogoutButtonHTML();
@@ -28,7 +29,8 @@ class CalendarView
 	* Generate HTML code on the output buffer for the logout button
 	* @return , BUT writes to standard output!
 	*/
-	private function generateCalendarHTML() : string {
+    private function generateCalendarHTML() : string 
+    {
 		$days = $this->generateDays();
 		return "
         <h1>Calendar</h1>

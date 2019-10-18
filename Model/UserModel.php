@@ -33,14 +33,18 @@ class UserModel
         }
     }
 
-    public function usernameIsValid () {
-        if (strlen($this->username) < 3) {
+    public function usernameIsValid() 
+    {
+        if (strlen($this->username) < 3) 
+        {
             throw new UsernameTooShortException();
         } 
     }
 
-    public function passwordsIsTooShort () {
-        if (strlen($this->password) < 6 && strlen($this->passwordRepeat) < 6) {
+    public function passwordsIsTooShort() 
+    {
+        if (strlen($this->password) < 6 && strlen($this->passwordRepeat) < 6) 
+        {
             throw new PasswordsTooShortException();
         }
     }

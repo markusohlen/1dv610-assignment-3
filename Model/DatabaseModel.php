@@ -2,7 +2,8 @@
 
 namespace model;
 
-class DatabaseModel {
+class DatabaseModel 
+{
     private static $username = 'username';
     private static $password = 'password';
 
@@ -14,12 +15,14 @@ class DatabaseModel {
     private static $dbport = 'DB_PORT';
     private static $dbtable = 'DB_TABLE';
 
-    private function fetchUsers() : array {
+    private function fetchUsers() : array 
+    {
         $users = array();
 
         $conn = new \mysqli(getenv(self::$dbhost), getenv(self::$dbuser), getenv(self::$dbpassword), getenv(self::$dbname), getenv(self::$dbport));
         
-        if ($conn->connect_error) {
+        if ($conn->connect_error) 
+        {
             die("Connection failed: " . $conn->connect_error);
         } 
         
@@ -29,8 +32,10 @@ class DatabaseModel {
 
         $result = $conn->query($sql);
 
-        if ($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
+        if ($result->num_rows > 0) 
+        {
+            while($row = $result->fetch_assoc()) 
+            {
                 $userCred = new \stdClass();
                 $userCred->username = $row[self::$username];
                 $userCred->password = $row[self::$password];
@@ -43,40 +48,50 @@ class DatabaseModel {
         return $users;
     }
 
-    public function userExists($username) : bool {
-        foreach ($this->fetchUsers() as $user) {         
-            if ($user->username === $username) {
+    public function userExists($username) : bool 
+    {
+        foreach ($this->fetchUsers() as $user) 
+        {         
+            if ($user->username === $username) 
+            {
                 return true;
             }
         }
         return false;
     }
 
-    public function passwordMatch($username, $password) : bool {
+    public function passwordMatch($username, $password) : bool 
+    {
         $user = null;
         $users = $this->fetchUsers();
 
-        foreach ($users as $u) {
-            if ($u->username === $username) {
+        foreach ($users as $u) 
+        {
+            if ($u->username === $username) 
+            {
                 $user = $u;
             }
         }
 
-        if ($user === null) {
+        if ($user === null) 
+        {
             return false;
         }
 
-        if ($user->password === $password) {
+        if ($user->password === $password) 
+        {
             return true;
         }
 
         return false;
     }
 
-    public function registerUser(\model\UserModel $user) : void {
+    public function registerUser(\model\UserModel $user) : void 
+    {
         $conn = new \mysqli(getenv(self::$dbhost), getenv(self::$dbuser), getenv(self::$dbpassword), getenv(self::$dbname), getenv(self::$dbport));
         
-        if ($conn->connect_error) {
+        if ($conn->connect_error) 
+        {
             die("Connection failed: " . $conn->connect_error);
         } 
         

@@ -2,7 +2,8 @@
 
 namespace view;
 
-class RegisterView {
+class RegisterView 
+{
     private static $register = "RegisterView::Register";
     private static $username = "RegisterView::UserName";
     private static $registerViewMessage = "RegisterView::Message";
@@ -13,13 +14,15 @@ class RegisterView {
     
     public function pressedRegister()
 	{
-		if (isset($_GET["register"])) {
+        if (isset($_GET["register"])) 
+        {
 			return true;
 		}
 		return false;
     }
     
-	public function setMessage($msg) {
+    public function setMessage($msg) 
+    {
 		$this->message = $msg;
 	}
 	/**
@@ -29,24 +32,24 @@ class RegisterView {
 	 *
 	 * @return  void BUT writes to standard output and cookies!
 	 */
-	public function response() {
-		$message = '';
-		
-		$response = $this->generateRegisterFormHTML($message);
+    public function response() 
+    {
+		$response = $this->generateRegisterFormHTML();
 		//$response .= $this->generateLogoutButtonHTML($message);
 		return $response;
 	}
 	
 	/**
 	* Generate HTML code on the output buffer for the logout button
-	* @param $message, String output message
 	* @return  void, BUT writes to standard output!
 	*/
-	private function generateRegisterFormHTML($message) {
+    private function generateRegisterFormHTML() 
+    {
         $currentUsername = "";
         $currentPassword = "";
         $currentPasswordRepeat = "";
-		if ($this->userPressedRegister() === true) {
+        if ($this->userPressedRegister() === true) 
+        {
             $currentUsername = $this->getRequestUsername();
             $currentPassword = $this->getRequestPassword();
             $currentPasswordRepeat = $this->getRequestPasswordRepeat();
@@ -76,8 +79,10 @@ class RegisterView {
 		';
     }
     
-    public function userPressedRegister() {
-        if (isset($_POST[self::$register]) && $_POST[self::$register] === "Register") {
+    public function userPressedRegister() 
+    {
+        if (isset($_POST[self::$register]) && $_POST[self::$register] === "Register") 
+        {
 			return true;
 		}
         return false;
@@ -88,60 +93,75 @@ class RegisterView {
         return new \model\UserModel($this->getRequestUsername(), $this->getRequestPassword(), $this->getRequestPasswordRepeat());
     }
 
-    private function getRequestUsername() {
+    private function getRequestUsername() 
+    {
         return $_POST[self::$username];
     }
 
-    private function getRequestPassword() {
+    private function getRequestPassword() 
+    {
         return $_POST[self::$password];
     }
 
-    private function getRequestPasswordRepeat() {
+    private function getRequestPasswordRepeat() 
+    {
         return $_POST[self::$passwordRepeat];
     }
 
-    private function userFilledInUsername() : bool {
-		if (isset($_POST[self::$username]) && empty($_POST[self::$username]) === false) {
+    private function userFilledInUsername() : bool 
+    {
+        if (isset($_POST[self::$username]) && empty($_POST[self::$username]) === false) 
+        {
 			return true;
 		}
 		return false;
 	}
 
-	private function userFilledInPassword() : bool {
-		if (isset($_POST[self::$password]) && empty($_POST[self::$password]) === false) {
+    private function userFilledInPassword() : bool 
+    {
+        if (isset($_POST[self::$password]) && empty($_POST[self::$password]) === false) 
+        {
 			return true;
 		}
 		return false;
     }
 
-    private function userFilledInPasswordRepeat() : bool {
-		if (isset($_POST[self::$passwordRepeat]) && empty($_POST[self::$passwordRepeat]) === false) {
+    private function userFilledInPasswordRepeat() : bool 
+    {
+        if (isset($_POST[self::$passwordRepeat]) && empty($_POST[self::$passwordRepeat]) === false) 
+        {
 			return true;
 		}
 		return false;
     }
     
-    public function userFilledInCredentials() : bool {
+    public function userFilledInCredentials() : bool 
+    {
 		return $this->userFilledInUsername() && $this->userFilledInPassword() && $this->userFilledInPasswordRepeat();
     }
 
-    public function setMissingCredentialsMessage() {
+    public function setMissingCredentialsMessage() 
+    {
         $this->message .= "Username has too few characters, at least 3 characters.<br>";
     }
 
-    public function setInvalidUsernameMessage() {
+    public function setInvalidUsernameMessage() 
+    {
         $this->message .= "Username has too few characters, at least 3 characters.<br>";
     }
 
-    public function setPasswordTooShortMessage() {
+    public function setPasswordTooShortMessage() 
+    {
         $this->message .= "Password has too few characters, at least 6 characters.<br>";
     }
 
-    public function setUsernameExistsMessage() {
+    public function setUsernameExistsMessage() 
+    {
         $this->message .= "User exists, pick another username.<br>";
     }
 
-    public function setPasswordsDoNotMatchMessage() {
+    public function setPasswordsDoNotMatchMessage() 
+    {
         $this->message .= "Passwords do not match.";
     }
 }

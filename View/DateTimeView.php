@@ -2,10 +2,12 @@
 
 namespace view;
 
-class DateTimeView {
+class DateTimeView 
+{
 
 
-	public function show() : string {
+	public function show() : string 
+	{
 		date_default_timezone_set("Europe/Stockholm");
 
 		$dayInWeek = date("l");

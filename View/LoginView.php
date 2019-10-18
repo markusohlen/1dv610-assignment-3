@@ -2,7 +2,8 @@
 
 namespace view;
 
-class LoginView {
+class LoginView 
+{
 	private static $login = 'LoginView::Login';
 	private static $logout = 'LoginView::Logout';
 	private static $name = 'LoginView::UserName';
@@ -16,7 +17,8 @@ class LoginView {
 
 	private $message = "";
 
-	public function __construct($cv) {
+	public function __construct($cv) 
+	{
 		$this->db = new \model\DatabaseModel();
 		$this->cv = $cv;
 	}
@@ -28,12 +30,15 @@ class LoginView {
 	 *
 	 * @return string BUT writes to standard output and cookies!
 	 */
-	public function response(bool $isLoggedIn) : string {
-		if ($isLoggedIn === true) {
+	public function response(bool $isLoggedIn) : string 
+	{
+		if ($isLoggedIn === true) 
+		{
 			$response = $this->generateLogoutButtonHTML();
 			$response .= $this->cv->response();
 		}
-		else {
+		else 
+		{
 			$response = $this->generateLoginFormHTML();
 		}
 
@@ -44,7 +49,8 @@ class LoginView {
 	* Generate HTML code on the output buffer for the logout button
 	* @return string BUT writes to standard output!
 	*/
-	private function generateLogoutButtonHTML() : string {
+	private function generateLogoutButtonHTML() : string 
+	{
 		return '
 			<form  method="post" >
 				<p id="' . self::$messageId . '">' . $this->message .'</p>
@@ -57,9 +63,11 @@ class LoginView {
 	* Generate HTML code on the output buffer for the logout button
 	* @return , BUT writes to standard output!
 	*/
-	private function generateLoginFormHTML() : string {
+	private function generateLoginFormHTML() : string 
+	{
 		$currentUsername = "";
-		if ($this->userPressedLogin() === true) {
+		if ($this->userPressedLogin() === true) 
+		{
 			$currentUsername = $this->getRequestUsername();
 		}
 
@@ -85,47 +93,59 @@ class LoginView {
 		';
 	}
 	
-	public function getRequestUsername() : string {
+	public function getRequestUsername() : string 
+	{
 		return $_POST[self::$name];
 	}
 
-	public function getRequestPassword() : string {
+	public function getRequestPassword() : string 
+	{
 		return $_POST[self::$password];
 	}
 	
-	public function userPressedLogin() : bool {
-		if (isset($_POST[self::$login])) {
+	public function userPressedLogin() : bool 
+	{
+		if (isset($_POST[self::$login])) 
+		{
 			return true;
 		}
 		return false;
 	}
 
-	public function userPressedLogout() : bool {
-		if (isset($_POST[self::$logout])) {
+	public function userPressedLogout() : bool 
+	{
+		if (isset($_POST[self::$logout])) 
+		{
 			return true;
 		}
 		return false;
 	}
 
-	private function userFilledInUsername() : bool {
-		if (isset($_POST[self::$name]) && empty($_POST[self::$name]) === false) {
+	private function userFilledInUsername() : bool 
+	{
+		if (isset($_POST[self::$name]) && empty($_POST[self::$name]) === false) 
+		{
 			return true;
 		}
 		return false;
 	}
 
-	private function userFilledInPassword() : bool {
-		if (isset($_POST[self::$password]) && empty($_POST[self::$password]) === false) {
+	private function userFilledInPassword() : bool 
+	{
+		if (isset($_POST[self::$password]) && empty($_POST[self::$password]) === false) 
+		{
 			return true;
 		}
 		return false;
 	}
 
-	public function userFilledInCredentials() : bool {
-		return $this->userFilledInUsername() && $this->userFilledInPassword();
-	}
+	// public function getUserCredentials() :  
+	// {
+	// 	return 
+	// }
 
-	public function setMissingCredentialsMessage() : void {
+	public function setMissingCredentialsMessage() : void 
+	{
 
 		if ($this->userFilledInUsername() === false) {
 			$this->message = "Username is missing";
@@ -135,15 +155,18 @@ class LoginView {
 		}
 	}
 
-	public function setIncorrectCredentialsMessage() : void {
+	public function setIncorrectCredentialsMessage() : void 
+	{
 		$this->message = "Wrong name or password <br>";
 	}
 
-	public function setWelcomeMessage() : void {
+	public function setWelcomeMessage() : void 
+	{
 		$this->message = "Welcome";
 	}
 
-	public function setLogoutMessage() : void {
+	public function setLogoutMessage() : void 
+	{
 		$this->message = "Bye bye!";
 	}
 }
