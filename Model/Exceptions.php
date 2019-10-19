@@ -15,3 +15,5 @@ class UsernameTooShortException extends \Exception {}
 class MissingUsernameException extends \Exception {}
 
 class MissingPasswordException extends \Exception {}
+
+class InvalidCredentialsException extends \Exception {}

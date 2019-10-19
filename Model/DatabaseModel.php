@@ -54,7 +54,7 @@ class DatabaseModel
     {
         foreach ($this->fetchUsers() as $user) 
         {         
-            if ($user->username === $username) 
+            if ($user->getUsername() === $username) 
             {
                 return true;
             }
@@ -69,7 +69,7 @@ class DatabaseModel
 
         foreach ($users as $u) 
         {
-            if ($u->username === $username) 
+            if ($u->getUsername() === $username) 
             {
                 $user = $u;
             }
@@ -80,7 +80,7 @@ class DatabaseModel
             return false;
         }
 
-        if ($user->password === $password) 
+        if ($user->getPassword() === $password) 
         {
             return true;
         }
@@ -88,7 +88,7 @@ class DatabaseModel
         return false;
     }
 
-    public function registerUser(\model\UserModel $user) : void 
+    public function registerUser(string $username, string $password) : void 
     {
         $conn = new \mysqli(getenv(self::$dbhost), getenv(self::$dbuser), getenv(self::$dbpassword), getenv(self::$dbname), getenv(self::$dbport));
         
@@ -98,9 +98,6 @@ class DatabaseModel
         } 
         
         $table = getenv(self::$dbtable);
-
-        $username = $user->getUsername();
-        $password = $user->getPassword();
 
         $sql = "INSERT INTO $table (username, password)
             VALUES ('$username', '$password')";

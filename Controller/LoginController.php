@@ -32,6 +32,18 @@ class LoginController
         {
             $user = $this->view->getUserCredentials();
             $user->checkMissingCredentials();
+
+            if ($this->dbModel->userExists($user->getUsername()) === false)
+            {
+                throw new \model\InvalidCredentialsException();
+            }
+
+            if ($this->dbModel->passwordMatch($user->getUsername(), $user->getPassword()) === false)
+            {
+                throw new \model\InvalidCredentialsException();
+            }
+
+            $this->doLogin();
         } 
         catch (\model\MissingUsernameException $e) 
         {
@@ -41,20 +53,10 @@ class LoginController
         {
             $this->view->setMissingPasswordMessage();
         }
-        catch (\Exception $e)
+        catch (\model\InvalidCredentialsException $e)
         {
-            echo "Error found: " . $e->getMessage();
+            $this->view->setIncorrectCredentialsMessage();
         }
-
-        
-        // if ($this->view->userFilledInCredentials() === false) {
-        //     $this->view->setMissingCredentialsMessage();
-        //     return;
-        // }
-
-        // $username = $this->view->getRequestUsername();
-        // $password = $this->view->getRequestPassword();
-        
 
         // if ($this->dbModel->userExists($username) === true && $this->dbModel->passwordMatch($username, $password) === true) {
         //     $this->doLogin();
@@ -62,7 +64,7 @@ class LoginController
         //     $this->view->setIncorrectCredentialsMessage();
         //     return;
         // }
-        var_dump($user);
+        // var_dump($user);
     }
 
     private function doLogin() : void {
