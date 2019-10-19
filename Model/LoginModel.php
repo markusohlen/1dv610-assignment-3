@@ -4,12 +4,16 @@ namespace model;
 
 class LoginModel
 {
-    // private $username;
-    // private $password;
+    public function checkMissingCredentials(string $username, string $password)
+    {
+        if (strlen($username) === 0)
+        {
+            throw new MissingUsernameException();
+        }
 
-    // public function __construct($username, $password)
-    // {
-    //     $this->username = $username;
-    //     $this->password = $password;
-    // }
+        if (strlen($password) === 0)
+        {
+            throw new MissingPasswordException();
+        }
+    }
 }

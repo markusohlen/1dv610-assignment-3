@@ -11,7 +11,7 @@ class LoginController
 
     public function __construct($lv, $dbm, $sm) {
         $this->view = $lv;
-        // $this->model = new \model\LoginModel();
+        $this->model = new \model\LoginModel();
         $this->dbModel = $dbm;
         $this->session = $sm;
     }
@@ -31,7 +31,7 @@ class LoginController
         try 
         {
             $user = $this->view->getUserCredentials();
-            $user->checkMissingCredentials();
+            $this->model->checkMissingCredentials($user->getUsername(), $user->getPassword());
 
             if ($this->dbModel->userExists($user->getUsername()) === false)
             {

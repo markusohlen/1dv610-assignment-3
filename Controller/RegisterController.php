@@ -26,7 +26,7 @@ class RegisterController {
         {
             $user = $this->view->getUserCredentials();
 
-            if ($this->dbModel->userExists($user) === true)
+            if ($this->dbModel->userExists($user->getUsername()) === true)
             {
                 throw new \model\UserAlreadyExistsException();
             }
@@ -35,7 +35,7 @@ class RegisterController {
             $user->passwordsIsTooShort();
             $user->passwordsMatch();
 
-            $this->dbModel->registerUser($user);
+            $this->dbModel->registerUser($user->getUsername(), $user->getPassword());
         }
         catch (\model\PasswordsDoNotMatchException $e) 
         {

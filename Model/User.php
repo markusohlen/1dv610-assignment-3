@@ -22,17 +22,4 @@ class User
     {
         return $this->password;
     }
-
-    public function checkMissingCredentials()
-    {
-        if (strlen($this->username) === 0)
-        {
-            throw new MissingUsernameException();
-        }
-
-        if (strlen($this->password) === 0)
-        {
-            throw new MissingPasswordException();
-        }
-    }
 }
