@@ -6,14 +6,6 @@ class RegisterModel {
     private static $minUsernameLength = 3;
     private static $minPasswordLength = 6;
 
-    public function passwordsMatch(string $password, string $passwordRepeat)
-    {
-        if ($password !== $passwordRepeat)
-        {
-            throw new PasswordsDoNotMatchException();
-        }
-    }
-
     public function usernameIsValid(string $username) 
     {
         if (strlen($username) < self::$minUsernameLength) 
@@ -27,6 +19,14 @@ class RegisterModel {
         if (strlen($password) < self::$minPasswordLength) 
         {
             throw new PasswordsTooShortException();
+        }
+    }
+
+    public function passwordsMatch(string $password, string $passwordRepeat)
+    {
+        if ($password !== $passwordRepeat)
+        {
+            throw new PasswordsDoNotMatchException();
         }
     }
 }

@@ -45,64 +45,6 @@ class LoginView
 		return $response;
 	}
 
-	/**
-	* Generate HTML code on the output buffer for the logout button
-	* @return string BUT writes to standard output!
-	*/
-	private function generateLogoutButtonHTML() : string 
-	{
-		return '
-			<form  method="post" >
-				<p id="' . self::$messageId . '">' . $this->message .'</p>
-				<input type="submit" name="' . self::$logout . '" value="logout"/>
-			</form>
-		';
-	}
-	
-	/**
-	* Generate HTML code on the output buffer for the logout button
-	* @return , BUT writes to standard output!
-	*/
-	private function generateLoginFormHTML() : string 
-	{
-		$currentUsername = "";
-		if ($this->userPressedLogin() === true) 
-		{
-			$currentUsername = $this->getRequestUsername();
-		}
-
-		return '
-		<a href="?register">Register a new user</a>
-			<form method="post" > 
-				<fieldset>
-					<legend>Login - enter Username and password</legend>
-					<p id="' . self::$messageId . '">' . $this->message . '</p>
-					
-					<label for="' . self::$name . '">Username :</label>
-					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="'. $currentUsername .'" />
-
-					<label for="' . self::$password . '">Password :</label>
-					<input type="password" id="' . self::$password . '" name="' . self::$password . '" />
-
-					<label for="' . self::$keep . '">Keep me logged in  :</label>
-					<input type="checkbox" id="' . self::$keep . '" name="' . self::$keep . '" />
-					
-					<input type="submit" name="' . self::$login . '" value="login" />
-				</fieldset>
-			</form>
-		';
-	}
-	
-	public function getRequestUsername() : string 
-	{
-		return $_POST[self::$name];
-	}
-
-	public function getRequestPassword() : string 
-	{
-		return $_POST[self::$password];
-	}
-	
 	public function userPressedLogin() : bool 
 	{
 		if (isset($_POST[self::$login])) 
@@ -152,5 +94,63 @@ class LoginView
 	public function setLogoutMessage() : void 
 	{
 		$this->message = "Bye bye!";
+	}
+
+	/**
+	* Generate HTML code on the output buffer for the logout button
+	* @return string BUT writes to standard output!
+	*/
+	private function generateLogoutButtonHTML() : string 
+	{
+		return '
+			<form  method="post" >
+				<p id="' . self::$messageId . '">' . $this->message .'</p>
+				<input type="submit" name="' . self::$logout . '" value="logout"/>
+			</form>
+		';
+	}
+	
+	/**
+	* Generate HTML code on the output buffer for the logout button
+	* @return , BUT writes to standard output!
+	*/
+	private function generateLoginFormHTML() : string 
+	{
+		$currentUsername = "";
+		if ($this->userPressedLogin() === true) 
+		{
+			$currentUsername = $this->getRequestUsername();
+		}
+
+		return '
+		<a href="?register">Register a new user</a>
+			<form method="post" > 
+				<fieldset>
+					<legend>Login - enter Username and password</legend>
+					<p id="' . self::$messageId . '">' . $this->message . '</p>
+					
+					<label for="' . self::$name . '">Username :</label>
+					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="'. $currentUsername .'" />
+
+					<label for="' . self::$password . '">Password :</label>
+					<input type="password" id="' . self::$password . '" name="' . self::$password . '" />
+
+					<label for="' . self::$keep . '">Keep me logged in  :</label>
+					<input type="checkbox" id="' . self::$keep . '" name="' . self::$keep . '" />
+					
+					<input type="submit" name="' . self::$login . '" value="login" />
+				</fieldset>
+			</form>
+		';
+	}
+	
+	private function getRequestUsername() : string 
+	{
+		return $_POST[self::$name];
+	}
+
+	private function getRequestPassword() : string 
+	{
+		return $_POST[self::$password];
 	}
 }

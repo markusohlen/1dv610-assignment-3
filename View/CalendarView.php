@@ -4,10 +4,6 @@ namespace view;
 
 class CalendarView
 {
-    public function wantsToShowCalendarPage(): bool
-    {
-        return true;
-    }
     /**
 	 * Create HTTP response
 	 *
@@ -15,6 +11,7 @@ class CalendarView
 	 *
 	 * @return string BUT writes to standard output and cookies!
 	 */
+
     public function response() : string 
     {
         $response = $this->generateCalendarHTML();
@@ -22,7 +19,12 @@ class CalendarView
         // $response .= $this->generateLogoutButtonHTML();
 
 		return $response;
-	}
+    }
+    
+    public function wantsToShowCalendarPage(): bool
+    {
+        return true;
+    }
 
 	/**
 	* Generate HTML code on the output buffer for the logout button

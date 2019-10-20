@@ -4,14 +4,17 @@ namespace controller;
 
 class MainController
 {
+    // Views
     private $lv;
     private $rv;
     private $dtv;
     private $v;
 
+    // Controllers
     private $lc;
     private $rc;
 
+    // Models
     private $sm;
     private $dm;
 
@@ -32,7 +35,6 @@ class MainController
         $this->rc = new \controller\RegisterController($this->rv, $this->dm);
     }
 
-
     public function renderView() : void
     {
         $view = $this->decideView();
@@ -40,32 +42,25 @@ class MainController
 
         $this->runController($controller);
 
-        $this->v->render($this->sm->getLoggedIn(), $this->dtv, $view);
+        $this->v->render($this->sm->getIsLoggedIn(), $this->dtv, $view);
     }
-
 
     private function runController($controller)
     {
         $controller->start();
     }
 
-
     private function decideView()
     {
-        if ($this->rv->pressedRegister())
+        if ($this->lv->userWantsToShowRegisterForm())
         {
             return $this->rv;
         }
-        // else if ($this->cv->wantsToShowCalendarPage() === true && $this->sm->getLoggedIn() === true)
-        // {
-        //     return $this->cv;
-        // }
         else
         {
             return $this->lv;
         }
     }
-
 
     private function decideController($view)
     {

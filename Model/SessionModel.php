@@ -4,7 +4,7 @@ namespace model;
 
 class SessionModel
 {
-    private static $isLoggedIn = "SessionModel::IsLoggedIn";
+    private static $isLoggedIn = __CLASS__ + "::IsLoggedIn";
 
     public function setLoggedIn() : void 
     {
@@ -16,7 +16,7 @@ class SessionModel
         $_SESSION[self::$isLoggedIn] = false;
     }
 
-    public function getLoggedIn() : bool 
+    public function getIsLoggedIn() : bool 
     {
         if (isset($_SESSION[self::$isLoggedIn]) && $_SESSION[self::$isLoggedIn] === true) 
         {

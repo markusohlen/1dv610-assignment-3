@@ -12,19 +12,6 @@ class RegisterView
 	
 	private $message = '';
     
-    public function pressedRegister()
-	{
-        if (isset($_GET["register"])) 
-        {
-			return true;
-		}
-		return false;
-    }
-    
-    public function setMessage($msg) 
-    {
-		$this->message = $msg;
-	}
 	/**
 	 * Create HTTP response
 	 *
@@ -35,19 +22,71 @@ class RegisterView
     public function response() 
     {
 		$response = $this->generateRegisterFormHTML();
-		//$response .= $this->generateLogoutButtonHTML($message);
+
 		return $response;
 	}
-	
+    
+    public function userPressedRegister() 
+    {
+        if (isset($_POST[self::$register]))
+        {
+			return true;
+		}
+        return false;
+    }
+
+    public function getUserCredentials() : \model\RegisterNewUser
+    {
+        $username = $this->getRequestUsername();
+        $password = $this->getRequestPassword();
+        $passwordRepeat = $this->getRequestPasswordRepeat();
+
+        return new \model\RegisterNewUser($username, $password, $passwordRepeat);
+    }
+
+    public function userFilledInCredentials() : bool 
+    {
+		return $this->userFilledInUsername() && $this->userFilledInPassword() && $this->userFilledInPasswordRepeat();
+    }
+
+    // Messages
+    public function setMissingCredentialsMessage() 
+    {
+        $this->message .= "Username has too few characters, at least 3 characters.<br>";
+    }
+
+    public function setInvalidUsernameMessage() 
+    {
+        $this->message .= "Username has too few characters, at least 3 characters.<br>";
+    }
+
+    public function setPasswordTooShortMessage() 
+    {
+        $this->message .= "Password has too few characters, at least 6 characters.<br>";
+    }
+
+    public function setUsernameExistsMessage() 
+    {
+        $this->message .= "User exists, pick another username.<br>";
+    }
+
+    public function setPasswordsDoNotMatchMessage() 
+    {
+        $this->message .= "Passwords do not match.";
+    }
+
+    // Private
+    
 	/**
 	* Generate HTML code on the output buffer for the logout button
 	* @return  void, BUT writes to standard output!
-	*/
+    */
     private function generateRegisterFormHTML() 
     {
         $currentUsername = "";
         $currentPassword = "";
         $currentPasswordRepeat = "";
+
         if ($this->userPressedRegister() === true) 
         {
             $currentUsername = $this->getRequestUsername();
@@ -77,20 +116,6 @@ class RegisterView
                     </fieldset>
                 </form>
 		';
-    }
-    
-    public function userPressedRegister() 
-    {
-        if (isset($_POST[self::$register]))
-        {
-			return true;
-		}
-        return false;
-    }
-
-    public function getUserCredentials() : \model\RegisterNewUser
-    {
-        return new \model\RegisterNewUser($this->getRequestUsername(), $this->getRequestPassword(), $this->getRequestPasswordRepeat());
     }
 
     private function getRequestUsername() 
@@ -133,35 +158,5 @@ class RegisterView
 			return true;
 		}
 		return false;
-    }
-    
-    public function userFilledInCredentials() : bool 
-    {
-		return $this->userFilledInUsername() && $this->userFilledInPassword() && $this->userFilledInPasswordRepeat();
-    }
-
-    public function setMissingCredentialsMessage() 
-    {
-        $this->message .= "Username has too few characters, at least 3 characters.<br>";
-    }
-
-    public function setInvalidUsernameMessage() 
-    {
-        $this->message .= "Username has too few characters, at least 3 characters.<br>";
-    }
-
-    public function setPasswordTooShortMessage() 
-    {
-        $this->message .= "Password has too few characters, at least 6 characters.<br>";
-    }
-
-    public function setUsernameExistsMessage() 
-    {
-        $this->message .= "User exists, pick another username.<br>";
-    }
-
-    public function setPasswordsDoNotMatchMessage() 
-    {
-        $this->message .= "Passwords do not match.";
     }
 }

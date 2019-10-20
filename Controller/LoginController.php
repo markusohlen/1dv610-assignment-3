@@ -17,7 +17,7 @@ class LoginController
     }
 
     public function start() : void {
-        if ($this->view->userPressedLogout() === true && $this->session->getLoggedIn() === true) 
+        if ($this->view->userPressedLogout() === true && $this->session->getIsLoggedIn() === true) 
         {
             $this->doLogout();
             return;
@@ -57,14 +57,6 @@ class LoginController
         {
             $this->view->setIncorrectCredentialsMessage();
         }
-
-        // if ($this->dbModel->userExists($username) === true && $this->dbModel->passwordMatch($username, $password) === true) {
-        //     $this->doLogin();
-        // } else {
-        //     $this->view->setIncorrectCredentialsMessage();
-        //     return;
-        // }
-        // var_dump($user);
     }
 
     private function doLogin() : void {
