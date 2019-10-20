@@ -43,7 +43,7 @@ class CalendarView
             <input type='submit' name='submit' value='Ändra datum'>
         </form>
         
-        <div style='display: inline-block;'>
+        <div class='calendar'>
             $days
         </div>
 		";
@@ -61,9 +61,9 @@ class CalendarView
         for ($i = 0; $i < $days; $i++)
         {
             $d = $i + 1;
-            $m .= "<a href='?year=$year&month=$month&day=$d'><div style='height: 100px; width: 150px; background-color: #f0f8ff; margin: 5px; float: left;'>$d</div></a>";
+            $m .= "<a href='?year=$year&month=$month&day=$d'><div class='calDay'>$d</div></a>";
         }
-        
+
         return $m;
     }
 }

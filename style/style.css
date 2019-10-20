@@ -1,4 +1,11 @@
 .calDay {
-    background-color: aliceblue;
+    height: 100px; 
+    width: 150px; 
+    background-color: #f0f8ff; 
+    margin: 5px; 
+    float: left;
 }
 
+.calendar {
+    display: inline-block;
+}
