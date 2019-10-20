@@ -52,17 +52,20 @@ class RegisterView
     // Messages
     public function setMissingCredentialsMessage() 
     {
-        $this->message .= "Username has too few characters, at least 3 characters.<br>";
+        $minUsernameLength = \config\Constants::minUsernameLength;
+        $this->message .= "Username has too few characters, at least $minUsernameLength characters.<br>";
     }
 
     public function setInvalidUsernameMessage() 
     {
-        $this->message .= "Username has too few characters, at least 3 characters.<br>";
+        $minUsernameLength = \config\Constants::minUsernameLength;
+        $this->message .= "Username has too few characters, at least $minUsernameLength characters.<br>";
     }
 
     public function setPasswordTooShortMessage() 
     {
-        $this->message .= "Password has too few characters, at least 6 characters.<br>";
+        $minPassworLength = \config\Constants::minPasswordLength;
+        $this->message .= "Password has too few characters, at least $minPassworLength characters.<br>";
     }
 
     public function setUsernameExistsMessage() 

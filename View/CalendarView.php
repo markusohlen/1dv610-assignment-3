@@ -34,7 +34,8 @@ class CalendarView
     {
         $date = date("Y")."-".date("m");
 
-		$days = $this->generateDays();
+        $days = $this->generateDays();
+        
 		return "
         <h1>Calendar</h1>
         <form method='get'>
@@ -42,7 +43,9 @@ class CalendarView
             <input type='submit' name='submit' value='Ändra datum'>
         </form>
         
-        $days
+        <div style='display: inline-block;'>
+            $days
+        </div>
 		";
     }
     
@@ -60,6 +63,7 @@ class CalendarView
             $d = $i + 1;
             $m .= "<a href='?year=$year&month=$month&day=$d'><div style='height: 100px; width: 150px; background-color: #f0f8ff; margin: 5px; float: left;'>$d</div></a>";
         }
+        
         return $m;
     }
 }

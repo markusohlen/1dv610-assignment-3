@@ -3,12 +3,9 @@
 namespace model;
 
 class RegisterModel {
-    private static $minUsernameLength = 3;
-    private static $minPasswordLength = 6;
-
     public function checkUsernameLength(string $username) 
     {
-        if (strlen($username) < self::$minUsernameLength) 
+        if (strlen($username) < \config\Constants::minUsernameLength) 
         {
             throw new UsernameTooShortException();
         } 
@@ -16,7 +13,7 @@ class RegisterModel {
 
     public function checkPasswordLength(string $password) 
     {
-        if (strlen($password) < self::$minPasswordLength) 
+        if (strlen($password) < \config\Constants::minPasswordLength) 
         {
             throw new PasswordTooShortException();
         }
