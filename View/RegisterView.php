@@ -81,16 +81,16 @@ class RegisterView
     
     public function userPressedRegister() 
     {
-        if (isset($_POST[self::$register]) && $_POST[self::$register] === "Register") 
+        if (isset($_POST[self::$register]))
         {
 			return true;
 		}
         return false;
     }
 
-    public function getUserCredentials() : \model\UserModel
+    public function getUserCredentials() : \model\RegisterNewUser
     {
-        return new \model\UserModel($this->getRequestUsername(), $this->getRequestPassword(), $this->getRequestPasswordRepeat());
+        return new \model\RegisterNewUser($this->getRequestUsername(), $this->getRequestPassword(), $this->getRequestPasswordRepeat());
     }
 
     private function getRequestUsername() 

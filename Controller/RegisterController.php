@@ -28,7 +28,7 @@ class RegisterController {
             }
 
             $this->model->usernameIsValid($user->getUsername());
-            $this->model->passwordsIsTooShort($user->getPassword(), $user->getPasswordRepeat());
+            $this->model->passwordIsTooShort($user->getPassword());
             $this->model->passwordsMatch($user->getPassword(), $user->getPasswordRepeat());
 
             $this->dbModel->registerUser($user->getUsername(), $user->getPassword());

@@ -121,13 +121,12 @@ class LoginView
 		return false;
 	}
 
-	public function getUserCredentials() : \model\RegisterNewUser
+	public function getUserCredentials() : \model\User
 	{
 		$username = $this->getRequestUsername();
 		$password = $this->getRequestPassword();
-		$passwordRepeat = $this->getRequestPasswordRepeat();
 
-		return new \model\RegisterNewUser($username, $password, $passwordRepeat);
+		return new \model\User($username, $password);
 	}
 
 	public function setMissingUsernameMessage() : void

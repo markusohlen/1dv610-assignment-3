@@ -2,7 +2,7 @@
 
 namespace model;
 
-class UserModel
+class RegisterNewUser
 {
     private $username;
     private $password;
