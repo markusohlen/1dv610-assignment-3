@@ -4,7 +4,12 @@ namespace model;
 
 class SessionModel
 {
-    private static $isLoggedIn = __CLASS__ + "::IsLoggedIn";
+    private static $isLoggedIn = __CLASS__ . "::IsLoggedIn";
+
+    public function __construct()
+    {
+        assert(session_status() === PHP_SESSION_ACTIVE);
+    }
 
     public function setLoggedIn() : void 
     {

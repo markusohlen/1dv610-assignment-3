@@ -52,7 +52,7 @@ class MainController
 
     private function decideView()
     {
-        if ($this->lv->userWantsToShowRegisterForm())
+        if ($this->v->userWantsToShowRegisterForm())
         {
             return $this->rv;
         }

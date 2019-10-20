@@ -35,7 +35,7 @@ class LoginView
 		if ($isLoggedIn === true) 
 		{
 			$response = $this->generateLogoutButtonHTML();
-			$response .= $this->cv->response();
+			// $response .= $this->cv->response();
 		}
 		else 
 		{
@@ -102,9 +102,11 @@ class LoginView
 	*/
 	private function generateLogoutButtonHTML() : string 
 	{
+		$response = $this->cv->response();
 		return '
 			<form  method="post" >
 				<p id="' . self::$messageId . '">' . $this->message .'</p>
+				<div>'.$response.'</div>
 				<input type="submit" name="' . self::$logout . '" value="logout"/>
 			</form>
 		';
