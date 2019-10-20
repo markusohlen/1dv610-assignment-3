@@ -63,25 +63,6 @@ class DatabaseModel
         $conn->close();
     }
 
-    private function createConnection() : \mysqli
-    {
-        $host = getenv(self::$dbhost);
-        $user = getenv(self::$dbuser);
-        $password = getenv(self::$dbpassword);
-        $dbName = getenv(self::$dbname);
-        $port = getenv(self::$dbport);
-
-        return new \mysqli($host, $user, $password, $dbName, $port);
-    }
-
-    private function checkConnectionError($conn)
-    {
-        if ($conn->connect_error) 
-        {
-            die("Connection failed: " . $conn->connect_error . "<br>Please try again later or contact an administrator");
-        } 
-    }
-
     private function fetchUsers() : array 
     {
         $users = array();
@@ -112,5 +93,24 @@ class DatabaseModel
         $conn->close();
         
         return $users;
+    }
+
+    private function createConnection() : \mysqli
+    {
+        $host = getenv(self::$dbhost);
+        $user = getenv(self::$dbuser);
+        $password = getenv(self::$dbpassword);
+        $dbName = getenv(self::$dbname);
+        $port = getenv(self::$dbport);
+
+        return new \mysqli($host, $user, $password, $dbName, $port);
+    }
+
+    private function checkConnectionError($conn)
+    {
+        if ($conn->connect_error) 
+        {
+            die("Connection failed: " . $conn->connect_error . "<br>Please try again later or contact an administrator");
+        } 
     }
 }
