@@ -7,10 +7,6 @@ class RegisterController {
     private $model;
     private $dbModel;
 
-    private $username;
-    private $password;
-    private $passwordRepeat;
-
     public function __construct($rv, $dbm) {
         $this->view = $rv;
         $this->model = new \model\RegisterModel();
@@ -31,9 +27,9 @@ class RegisterController {
                 throw new \model\UserAlreadyExistsException();
             }
 
-            $user->usernameIsValid();
-            $user->passwordsIsTooShort();
-            $user->passwordsMatch();
+            $this->model->usernameIsValid($user->getUsername());
+            $this->model->passwordsIsTooShort($user->getPassword(), $user->getPasswordRepeat());
+            $this->model->passwordsMatch($user->getPassword(), $user->getPasswordRepeat());
 
             $this->dbModel->registerUser($user->getUsername(), $user->getPassword());
         }

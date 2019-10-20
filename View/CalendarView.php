@@ -6,7 +6,6 @@ class CalendarView
 {
     public function wantsToShowCalendarPage(): bool
     {
-        echo "SADASDSAD";
         return true;
     }
     /**
@@ -31,11 +30,14 @@ class CalendarView
 	*/
     private function generateCalendarHTML() : string 
     {
+        $date = date("Y")."-".date("m");
+
 		$days = $this->generateDays();
 		return "
         <h1>Calendar</h1>
         <form method='get'>
-            <input type='month' name='' id=''>
+            <input type='month' value='$date' name='' id=''>
+            <input type='submit' name='submit' value='Ändra datum'>
         </form>
         
         $days
@@ -54,7 +56,7 @@ class CalendarView
         for ($i = 0; $i < $days; $i++)
         {
             $d = $i + 1;
-            $m .= "<div style='height: 100px; width: 150px; background-color: #f0f8ff; margin: 5px; float: left;'>$d</div>";
+            $m .= "<a href='?year=$year&month=$month&day=$d'><div style='height: 100px; width: 150px; background-color: #f0f8ff; margin: 5px; float: left;'>$d</div></a>";
         }
         return $m;
     }

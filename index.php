@@ -9,8 +9,9 @@ require_once('model/LoginModel.php');
 require_once('model/SessionModel.php');
 require_once('model/RegisterModel.php');
 
-require_once('model/UserModel.php');
+// require_once('model/UserModel.php');
 require_once('model/User.php');
+require_once('model/RegisterNewUser.php');
 
 // Require exceptions
 require_once('model/Exceptions.php');

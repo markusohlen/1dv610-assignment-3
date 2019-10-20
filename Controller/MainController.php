@@ -69,7 +69,7 @@ class MainController
 
     private function decideController($view)
     {
-        if ($view instanceof $this->rv)
+        if ($view instanceof \view\RegisterView)
         {
             return $this->rc;
         }
