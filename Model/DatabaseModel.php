@@ -27,40 +27,25 @@ class DatabaseModel
         return false;
     }
 
-    public function passwordMatch($username, $password) : bool 
+    public function fetchUser($username) : \model\User
     {
-        $user = null;
         $users = $this->fetchUsers();
 
-        foreach ($users as $u) 
-        {
-            if ($u->getUsername() === $username) 
+        foreach ($users as $user) 
+        {         
+            if ($user->getUsername() === $username) 
             {
-                $user = $u;
+                return $user;
             }
         }
-
-        if ($user === null) 
-        {
-            return false;
-        }
-
-        if ($user->getPassword() === $password) 
-        {
-            return true;
-        }
-
-        return false;
+        throw new InvalidCredentialsException();
     }
 
     public function registerUser(string $username, string $password) : void 
     {
         $conn = $this->createConnection();
         
-        if ($conn->connect_error) 
-        {
-            die("Connection failed: " . $conn->connect_error);
-        } 
+        $this->checkConnectionError($conn);
         
         $table = getenv(self::$dbtable);
 
@@ -78,16 +63,32 @@ class DatabaseModel
         $conn->close();
     }
 
+    private function createConnection() : \mysqli
+    {
+        $host = getenv(self::$dbhost);
+        $user = getenv(self::$dbuser);
+        $password = getenv(self::$dbpassword);
+        $dbName = getenv(self::$dbname);
+        $port = getenv(self::$dbport);
+
+        return new \mysqli($host, $user, $password, $dbName, $port);
+    }
+
+    private function checkConnectionError($conn)
+    {
+        if ($conn->connect_error) 
+        {
+            die("Connection failed: " . $conn->connect_error . "<br>Please try again later or contact an administrator");
+        } 
+    }
+
     private function fetchUsers() : array 
     {
         $users = array();
 
         $conn = $this->createConnection();
-        
-        if ($conn->connect_error) 
-        {
-            die("Connection failed: " . $conn->connect_error);
-        } 
+
+        $this->checkConnectionError($conn); 
         
         $table = getenv(self::$dbtable);
         
@@ -111,16 +112,5 @@ class DatabaseModel
         $conn->close();
         
         return $users;
-    }
-
-    private function createConnection() : \mysqli
-    {
-        $host = getenv(self::$dbhost);
-        $user = getenv(self::$dbuser);
-        $password = getenv(self::$dbpassword);
-        $dbName = getenv(self::$dbname);
-        $port = getenv(self::$dbport);
-
-        return new \mysqli($host, $user, $password, $dbName, $port);
     }
 }

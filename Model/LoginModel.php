@@ -19,4 +19,13 @@ class LoginModel
             throw new MissingPasswordException();
         }
     }
+
+    
+    public function checkPasswordsMatch($password, $password2)
+    {
+        if ($password !== $password2)
+        {
+            throw new InvalidCredentialsException();
+        }
+    }
 }

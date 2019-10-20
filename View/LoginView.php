@@ -106,9 +106,9 @@ class LoginView
 		return '
 			<form  method="post" >
 				<p id="' . self::$messageId . '">' . $this->message .'</p>
-				<div>'.$response.'</div>
 				<input type="submit" name="' . self::$logout . '" value="logout"/>
 			</form>
+			<div>'.$response.'</div>
 		';
 	}
 	

@@ -34,7 +34,6 @@ class LoginController
         }
 
         $this->login();
-        
     }
 
     private function login()
@@ -77,15 +76,9 @@ class LoginController
     {
         try 
         {
-            if ($this->dbModel->userExists($this->user->getUsername()) === false)
-            {
-                throw new \model\InvalidCredentialsException();
-            }
+            $userToCompare = $this->dbModel->fetchUser($this->user->getUsername());
 
-            if ($this->dbModel->passwordMatch($this->user->getUsername(), $this->user->getPassword()) === false)
-            {
-                throw new \model\InvalidCredentialsException();
-            }
+            $this->model->checkPasswordsMatch($this->user->getPassword(), $userToCompare->getPassword());
         }
         catch (\model\InvalidCredentialsException $e)
         {
