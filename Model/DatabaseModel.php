@@ -15,41 +15,6 @@ class DatabaseModel
     private static $dbport = 'DB_PORT';
     private static $dbtable = 'DB_TABLE';
 
-    private function fetchUsers() : array 
-    {
-        $users = array();
-
-        $conn = new \mysqli(getenv(self::$dbhost), getenv(self::$dbuser), getenv(self::$dbpassword), getenv(self::$dbname), getenv(self::$dbport));
-        
-        if ($conn->connect_error) 
-        {
-            die("Connection failed: " . $conn->connect_error);
-        } 
-        
-        $table = getenv(self::$dbtable);
-        
-        $sql = "SELECT * FROM $table";
-
-        $result = $conn->query($sql);
-
-        if ($result->num_rows > 0) 
-        {
-            while($row = $result->fetch_assoc()) 
-            {
-                $username = $row[self::$username];
-                $password = $row[self::$password];
-
-                $userCred = new \model\User($username, $password);
-
-                array_push($users, $userCred);
-            }
-        }
-
-        $conn->close();
-        
-        return $users;
-    }
-
     public function userExists($username) : bool 
     {
         foreach ($this->fetchUsers() as $user) 
@@ -90,7 +55,7 @@ class DatabaseModel
 
     public function registerUser(string $username, string $password) : void 
     {
-        $conn = new \mysqli(getenv(self::$dbhost), getenv(self::$dbuser), getenv(self::$dbpassword), getenv(self::$dbname), getenv(self::$dbport));
+        $conn = $this->createConnection();
         
         if ($conn->connect_error) 
         {
@@ -111,5 +76,51 @@ class DatabaseModel
         // }
 
         $conn->close();
+    }
+
+    private function fetchUsers() : array 
+    {
+        $users = array();
+
+        $conn = $this->createConnection();
+        
+        if ($conn->connect_error) 
+        {
+            die("Connection failed: " . $conn->connect_error);
+        } 
+        
+        $table = getenv(self::$dbtable);
+        
+        $sql = "SELECT * FROM $table";
+
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) 
+        {
+            while($row = $result->fetch_assoc()) 
+            {
+                $username = $row[self::$username];
+                $password = $row[self::$password];
+
+                $userCred = new \model\User($username, $password);
+
+                array_push($users, $userCred);
+            }
+        }
+
+        $conn->close();
+        
+        return $users;
+    }
+
+    private function createConnection() : \mysqli
+    {
+        $host = getenv(self::$dbhost);
+        $user = getenv(self::$dbuser);
+        $password = getenv(self::$dbpassword);
+        $dbName = getenv(self::$dbname);
+        $port = getenv(self::$dbport);
+
+        return new \mysqli($host, $user, $password, $dbName, $port);
     }
 }
