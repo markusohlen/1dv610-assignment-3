@@ -5,7 +5,7 @@ namespace model;
 // Register
 class PasswordsDoNotMatchException extends \Exception {}
 
-class PasswordsTooShortException extends \Exception {}
+class PasswordTooShortException extends \Exception {}
 
 class UserAlreadyExistsException extends \Exception {}
 

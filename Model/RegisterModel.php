@@ -6,7 +6,7 @@ class RegisterModel {
     private static $minUsernameLength = 3;
     private static $minPasswordLength = 6;
 
-    public function usernameIsValid(string $username) 
+    public function checkUsernameLength(string $username) 
     {
         if (strlen($username) < self::$minUsernameLength) 
         {
@@ -14,11 +14,11 @@ class RegisterModel {
         } 
     }
 
-    public function passwordIsTooShort(string $password) 
+    public function checkPasswordLength(string $password) 
     {
         if (strlen($password) < self::$minPasswordLength) 
         {
-            throw new PasswordsTooShortException();
+            throw new PasswordTooShortException();
         }
     }
 
