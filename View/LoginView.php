@@ -35,7 +35,7 @@ class LoginView
 		if ($isLoggedIn === true) 
 		{
 			$response = $this->generateLogoutButtonHTML();
-			// $response .= $this->cv->response();
+			$response .= $this->cv->response();
 		}
 		else 
 		{
