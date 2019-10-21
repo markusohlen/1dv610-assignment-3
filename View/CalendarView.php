@@ -4,6 +4,8 @@ namespace view;
 
 class CalendarView
 {
+    private static $changeDate = "CalendarView::ChangeDate";
+    private static $changeDateValue = "CalendarView::ChangeDate";
     /**
 	 * Create HTTP response
 	 *
@@ -21,7 +23,7 @@ class CalendarView
 		return $response;
     }
     
-    public function wantsToShowCalendarPage(): bool
+    public function wantsToChangeCalendarDate(): bool
     {
         return true;
     }
@@ -32,17 +34,41 @@ class CalendarView
 	*/
     private function generateCalendarHTML() : string 
     {
-        $date = date("Y")."-".date("m");
+        // $date = date("Y")."-".date("m");
 
-        $days = $this->generateDays();
         
-        
+         
+        if (isset($_POST["date"]) === false)
+        {
+            $month = date("m");
+            $date = date("Y")."-".date("m");
+        }
+        else
+        {
+            $month = $_POST["month"];
+            $date = $_POST["date"];
+        }
+
+        if (isset($_POST[self::$changeDate]))
+        {
+            $month = $_POST["month"];
+            $date = $_POST["date"];
+            echo "SDADASDAS";
+        }
+
+        $days = $this->generateDays($month);
+
+        var_dump($date);
+        $monthSelector = $this->generateMonthSelector(date("m"));
 		return "
         <h1>Calendar</h1>
 
-        <form method='get'>
-            <input type='month' value='$date' name='' id=''>
-            <input type='submit' name='submit' value='Ändra datum'>
+        <form method='post'>
+            <input type='month' value='$date' name='date' id=''>
+            <select name='month'>
+                $monthSelector
+            </select>
+            <input type='submit' name='" . self::$changeDate . "' value='Change date'>
         </form>
         
         <div class='calendar'>
@@ -51,11 +77,10 @@ class CalendarView
 		";
     }
     
-    private function generateDays(): string
+    private function generateDays($month): string
     {
         $m = "";
 
-        $month = date("m");
         $year = date("Y");
         
         $days = cal_days_in_month(CAL_GREGORIAN, (int)$month, (int)$year);
@@ -69,5 +94,25 @@ class CalendarView
         }
 
         return $m;
+    }
+
+    private function generateMonthSelector($month)
+    {
+        $ret = "";
+
+        for ($i = 1; $i <= 12; $i++) 
+        {
+            $monthName = date("F", mktime(0, 0, 0, $i));
+            $ret .= "<option value='$i' " . $this->chooseDefault($i, $month) . ">$monthName</option>";
+        }
+        return $ret;
+    }
+
+    private function chooseDefault($selectValue, $month)
+    {
+        if ((int)$selectValue === (int)$month)
+        {
+            return "selected='true'";
+        }
     }
 }
