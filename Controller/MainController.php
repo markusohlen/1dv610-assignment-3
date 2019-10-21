@@ -13,10 +13,12 @@ class MainController
     // Controllers
     private $lc;
     private $rc;
+    private $cc;
 
     // Models
     private $sm;
     private $dm;
+    private $cm;
 
     public function __construct()
     {
@@ -28,9 +30,10 @@ class MainController
 
         $this->sm = new \model\SessionModel();
         $this->dm = new \model\DatabaseModel();
+        $this->cm = new \model\CalendarModel();
 
-        $this->lc = new \controller\LoginController($this->lv, $this->dm, $this->sm);
-        
+        $this->cc = new \controller\CalendarController($this->cv, $this->cm);
+        $this->lc = new \controller\LoginController($this->lv, $this->dm, $this->sm, $this->cc);
         $this->rc = new \controller\RegisterController($this->rv, $this->dm);
     }
 
@@ -44,7 +47,9 @@ class MainController
         else
         {
             $this->lc->login();
+            $this->cc->run();
             $this->v->render($this->sm->getIsLoggedIn(), $this->lv);
+            
         }
     }
 }

@@ -8,16 +8,18 @@ class LoginController
     private $model;
     private $dbModel;
     private $session;
+    private $calendarController;
 
     private $hasException = false;
     private $user;
 
-    public function __construct($lv, $dbm, $sm) 
+    public function __construct($lv, $dbm, $sm, $cc) 
     {
         $this->view = $lv;
         $this->model = new \model\LoginModel();
         $this->dbModel = $dbm;
         $this->session = $sm;
+        $this->calendarController = $cc;
     }
 
     public function login() : void 
