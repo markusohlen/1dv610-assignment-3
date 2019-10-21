@@ -4,6 +4,11 @@ namespace view;
 
 class DateTimeView 
 {
+	/**
+    * Generate HTML code for the time
+    
+	* @return String - A html page as a string
+	*/
 	public function show() : string 
 	{
 		date_default_timezone_set("Europe/Stockholm");

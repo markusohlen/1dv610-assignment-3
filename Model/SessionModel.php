@@ -8,6 +8,7 @@ class SessionModel
 
     public function __construct()
     {
+        // Checks if session is acticve
         assert(session_status() === PHP_SESSION_ACTIVE);
     }
 

@@ -11,6 +11,9 @@ class LayoutView
 		$this->dtv = $dtv;
 	}
 
+	/**
+    * Generates the default HTML page and adds view(s) to show
+	*/
     public function render(bool $isLoggedIn, $view) : void 
     {
 		echo '<!DOCTYPE html>
@@ -33,15 +36,6 @@ class LayoutView
 			</html>
 		';
   	}
-
-	public function userWantsToShowRegisterForm() : bool
-	{
-		if (isset($_GET["register"])) 
-		{
-			return true;
-		}
-		return false;
-	}
 
   	private function renderIsLoggedIn(bool $isLoggedIn) : string 
   	{

@@ -10,6 +10,7 @@ class LoginView
 	private static $password = 'LoginView::Password';
 	private static $keep = 'LoginView::KeepMeLoggedIn';
 	private static $messageId = 'LoginView::Message';
+	private static $showRegister = 'register';
 
 	private $db;
 
@@ -22,12 +23,10 @@ class LoginView
 	}
 
 	/**
-	 * Create HTTP response
-	 *
-	 * Should be called after a login attempt has been determined
-	 *
-	 * @return string BUT writes to standard output and cookies!
-	 */
+	* Generate HTML code for the login view
+	*
+	* @return String - A html page as a string
+	*/
 	public function response(bool $isLoggedIn) : string 
 	{
 		if ($isLoggedIn === true) 
@@ -55,6 +54,15 @@ class LoginView
 	public function userPressedLogout() : bool 
 	{
 		if (isset($_POST[self::$logout])) 
+		{
+			return true;
+		}
+		return false;
+	}
+
+	public function userWantsToShowRegisterForm() : bool
+	{
+		if (isset($_GET[self::$showRegister])) 
 		{
 			return true;
 		}
@@ -95,8 +103,9 @@ class LoginView
 	}
 
 	/**
-	* Generate HTML code on the output buffer for the logout button
-	* @return string BUT writes to standard output!
+    * Generate HTML code for the logout component
+    *
+	* @return String - A html page as a string
 	*/
 	private function generateLogoutButtonHTML() : string 
 	{
@@ -110,8 +119,9 @@ class LoginView
 	}
 	
 	/**
-	* Generate HTML code on the output buffer for the logout button
-	* @return , BUT writes to standard output!
+    * Generate HTML code for the login form
+    *
+	* @return String - A html page as a string
 	*/
 	private function generateLoginFormHTML() : string 
 	{
@@ -122,7 +132,7 @@ class LoginView
 		}
 
 		return '
-		<a href="?register">Register a new user</a>
+		<a href="?' . self::$showRegister . '">Register a new user</a>
 			<form method="post" > 
 				<fieldset>
 					<legend>Login - enter Username and password</legend>

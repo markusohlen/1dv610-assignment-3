@@ -37,7 +37,7 @@ class MainController
 
     public function renderView() : void
     {
-        if ($this->v->userWantsToShowRegisterForm())
+        if ($this->lv->userWantsToShowRegisterForm())
         {
             $this->rc->register();
             $this->v->render($this->sm->getIsLoggedIn(), $this->rv);

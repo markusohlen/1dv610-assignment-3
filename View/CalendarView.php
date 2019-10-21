@@ -10,13 +10,10 @@ class CalendarView
     private $month;
 
     /**
-	 * Create HTTP response
-	 *
-	 * Should be called after a login attempt has been determined
-	 *
-	 * @return string BUT writes to standard output and cookies!
+	 * Creates a HTML view view
+     * 
+     * @return String - A html page as a string
 	 */
-
     public function response() : string 
     {
         $response = $this->generateCalendarHTML();
@@ -51,8 +48,9 @@ class CalendarView
     }
 
 	/**
-	* Generate HTML code on the output buffer for the logout button
-	* @return , BUT writes to standard output!
+    * Generate HTML code for the calendar
+    
+	* @return String - A html page as a string
 	*/
     private function generateCalendarHTML() : string 
     {

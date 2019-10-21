@@ -13,12 +13,10 @@ class RegisterView
 	private $message = '';
     
 	/**
-	 * Create HTTP response
-	 *
-	 * Should be called after a Register attempt has been determined
-	 *
-	 * @return  void BUT writes to standard output and cookies!
-	 */
+    * Generate HTML code for the register view
+    
+	* @return String - A html page as a string
+	*/
     public function response() : string
     {
 		$response = $this->generateRegisterFormHTML();
@@ -79,11 +77,12 @@ class RegisterView
     {
         $this->message .= "Passwords do not match.";
     }
+
+    /**
+    * Generate HTML code for the register form
     
-	/**
-	* Generate HTML code on the output buffer for the logout button
-	* @return string 
-    */
+	* @return String - A html page as a string
+	*/
     private function generateRegisterFormHTML()  : string
     {
         $currentUsername = "";

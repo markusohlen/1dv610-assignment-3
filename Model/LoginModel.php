@@ -21,9 +21,9 @@ class LoginModel
     }
 
     
-    public function checkPasswordsMatch(string $password, string $password2) : void
+    public function checkPasswordsMatch(string $password, string $passwordFromDB) : void
     {
-        if ($password !== $password2)
+        if ($password !== $passwordFromDB)
         {
             throw new InvalidCredentialsException();
         }

@@ -2,6 +2,9 @@
 
 namespace model;
 
+/**
+ * Readonly data structure for a user
+ */
 class User
 {
     private $username;

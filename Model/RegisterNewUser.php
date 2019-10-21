@@ -2,6 +2,9 @@
 
 namespace model;
 
+/**
+ * Read only data structure for registrating a new user
+ */
 class RegisterNewUser
 {
     private $username;

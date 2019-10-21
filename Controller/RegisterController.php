@@ -7,6 +7,7 @@ class RegisterController {
     private $model;
     private $dbModel;
 
+    // If anything is wrong with the credentials
     private $hasException = false;
     private $user;
 
