@@ -5,15 +5,13 @@ namespace controller;
 class CalendarController
 {
     private $view;
-    private $model;
 
-    public function __construct(\view\CalendarView $cv, \model\CalendarModel $cm)
+    public function __construct(\view\CalendarView $cv)
     {
         $this->view = $cv;
-        $this->model = $cm;
     }
 
-    public function run()
+    public function run() : void
     {
         if ($this->view->wantsToChangeCalendarDate() === true)
         {
@@ -21,7 +19,7 @@ class CalendarController
         }
     }
 
-    private function doChangeDate()
+    private function doChangeDate() : void
     {
         $date = $this->view->getMonth();
         $this->view->setMonth($date);

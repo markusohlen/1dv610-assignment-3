@@ -4,7 +4,7 @@ namespace model;
 
 class LoginModel
 {
-    public function checkMissingUsername(string $username)
+    public function checkMissingUsername(string $username) : void
     {
         if (strlen($username) === 0) // Empty
         {
@@ -12,7 +12,7 @@ class LoginModel
         }
     }
 
-    public function checkMissingPassword(string $password)
+    public function checkMissingPassword(string $password) : void
     {
         if (strlen($password) === 0) // Empty
         {
@@ -21,7 +21,7 @@ class LoginModel
     }
 
     
-    public function checkPasswordsMatch($password, $password2)
+    public function checkPasswordsMatch(string $password, string $password2) : void
     {
         if ($password !== $password2)
         {

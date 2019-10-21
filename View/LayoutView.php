@@ -11,7 +11,7 @@ class LayoutView
 		$this->dtv = $dtv;
 	}
 
-    public function render($isLoggedIn, $view) : void 
+    public function render(bool $isLoggedIn, $view) : void 
     {
 		echo '<!DOCTYPE html>
 			<html>
@@ -34,7 +34,7 @@ class LayoutView
 		';
   	}
 
-	public function userWantsToShowRegisterForm()
+	public function userWantsToShowRegisterForm() : bool
 	{
 		if (isset($_GET["register"])) 
 		{
@@ -43,7 +43,7 @@ class LayoutView
 		return false;
 	}
 
-  	private function renderIsLoggedIn($isLoggedIn) : string 
+  	private function renderIsLoggedIn(bool $isLoggedIn) : string 
   	{
     	if ($isLoggedIn) 
     	{

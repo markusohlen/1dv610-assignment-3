@@ -19,7 +19,7 @@ class RegisterView
 	 *
 	 * @return  void BUT writes to standard output and cookies!
 	 */
-    public function response() 
+    public function response() : string
     {
 		$response = $this->generateRegisterFormHTML();
 
@@ -42,7 +42,7 @@ class RegisterView
         $passwordRepeat = $this->getRequestPasswordRepeat();
 
         $t = new \model\RegisterNewUser($username, $password, $passwordRepeat);
-        // var_dump($t);
+
         return $t;
     }
 
@@ -52,41 +52,39 @@ class RegisterView
     }
 
     // Messages
-    public function setMissingCredentialsMessage() 
+    public function setMissingCredentialsMessage() : void
     {
         $minUsernameLength = \config\Constants::minUsernameLength;
         $this->message .= "Username has too few characters, at least $minUsernameLength characters.<br>";
     }
 
-    public function setInvalidUsernameMessage() 
+    public function setInvalidUsernameMessage() : void
     {
         $minUsernameLength = \config\Constants::minUsernameLength;
         $this->message .= "Username has too few characters, at least $minUsernameLength characters.<br>";
     }
 
-    public function setPasswordTooShortMessage() 
+    public function setPasswordTooShortMessage() : void
     {
         $minPassworLength = \config\Constants::minPasswordLength;
         $this->message .= "Password has too few characters, at least $minPassworLength characters.<br>";
     }
 
-    public function setUsernameExistsMessage() 
+    public function setUsernameExistsMessage() : void
     {
         $this->message .= "User exists, pick another username.<br>";
     }
 
-    public function setPasswordsDoNotMatchMessage() 
+    public function setPasswordsDoNotMatchMessage() : void
     {
         $this->message .= "Passwords do not match.";
     }
-
-    // Private
     
 	/**
 	* Generate HTML code on the output buffer for the logout button
-	* @return  void, BUT writes to standard output!
+	* @return string 
     */
-    private function generateRegisterFormHTML() 
+    private function generateRegisterFormHTML()  : string
     {
         $currentUsername = "";
         $currentPassword = "";
@@ -123,17 +121,17 @@ class RegisterView
 		';
     }
 
-    private function getRequestUsername() 
+    private function getRequestUsername() : string
     {
         return $_POST[self::$username];
     }
 
-    private function getRequestPassword() 
+    private function getRequestPassword() : string
     {
         return $_POST[self::$password];
     }
 
-    private function getRequestPasswordRepeat() 
+    private function getRequestPasswordRepeat() : string
     {
         return $_POST[self::$passwordRepeat];
     }

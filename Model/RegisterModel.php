@@ -4,7 +4,7 @@ namespace model;
 
 class RegisterModel 
 {
-    public function checkUsernameLength(string $username) 
+    public function checkUsernameLength(string $username) : void
     {
         if (strlen($username) < \config\Constants::minUsernameLength) 
         {
@@ -12,7 +12,7 @@ class RegisterModel
         } 
     }
 
-    public function checkPasswordLength(string $password) 
+    public function checkPasswordLength(string $password) : void
     {
         if (strlen($password) < \config\Constants::minPasswordLength) 
         {
@@ -20,7 +20,7 @@ class RegisterModel
         }
     }
 
-    public function passwordsMatch(string $password, string $passwordRepeat)
+    public function passwordsMatch(string $password, string $passwordRepeat) : void
     {
         if ($password !== $passwordRepeat)
         {

@@ -15,7 +15,7 @@ class DatabaseModel
     private static $dbport = 'DB_PORT';
     private static $dbtable = 'DB_TABLE';
 
-    public function userExists($username) : bool 
+    public function userExists(string $username) : bool 
     {
         foreach ($this->fetchUsers() as $user) 
         {         
@@ -27,7 +27,7 @@ class DatabaseModel
         return false;
     }
 
-    public function fetchUser($username) : \model\User
+    public function fetchUser(string $username) : \model\User
     {
         $users = $this->fetchUsers();
 
@@ -53,12 +53,6 @@ class DatabaseModel
             VALUES ('$username', '$password')";
         
         $conn->query($sql);
-        
-        // if ($conn->query($sql) === TRUE) {
-        //     echo "New record created successfully";
-        // } else {
-        //     echo "Error: " . $sql . "<br>" . $conn->error;
-        // }
 
         $conn->close();
     }
@@ -106,7 +100,7 @@ class DatabaseModel
         return new \mysqli($host, $user, $password, $dbName, $port);
     }
 
-    private function checkConnectionError($conn)
+    private function checkConnectionError(\mysqli $conn) : void
     {
         if ($conn->connect_error) 
         {

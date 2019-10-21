@@ -10,13 +10,14 @@ class RegisterController {
     private $hasException = false;
     private $user;
 
-    public function __construct($rv, $dbm) {
+    public function __construct(\view\RegisterView $rv, \model\DatabaseModel $dbm) {
         $this->view = $rv;
         $this->model = new \model\RegisterModel();
         $this->dbModel = $dbm;
     }
 
-    public function register() {
+    public function register() : void
+    {
         if ($this->view->userPressedRegister() === false) {
             return;
         }
@@ -24,7 +25,7 @@ class RegisterController {
         $this->doRegistration();
     }
 
-    private function doRegistration()
+    private function doRegistration() : void
     {
         $this->user = $this->view->getUserCredentials();
         
@@ -38,7 +39,7 @@ class RegisterController {
         }
     }
 
-    private function checkShortUserCredentials()
+    private function checkShortUserCredentials() : void
     {
         try 
         {
@@ -61,7 +62,7 @@ class RegisterController {
         }
     }
 
-    private function checkUserExists()
+    private function checkUserExists() : void
     {
         try 
         {
@@ -77,7 +78,7 @@ class RegisterController {
         }
     }
 
-    private function checkPasswordsMatch()
+    private function checkPasswordsMatch() : void
     {
         try 
         {

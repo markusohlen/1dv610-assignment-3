@@ -13,7 +13,7 @@ class LoginController
     private $hasException = false;
     private $user;
 
-    public function __construct($lv, $dbm, $sm, $cc) 
+    public function __construct(\view\LoginView $lv, \model\DatabaseModel $dbm, \model\SessionModel $sm, \controller\CalendarController $cc)
     {
         $this->view = $lv;
         $this->model = new \model\LoginModel();
@@ -45,7 +45,7 @@ class LoginController
         $this->session->setLoggedOut();
     }
 
-    private function doLogin()
+    private function doLogin() : void
     {
         $this->user = $this->view->getUserCredentials();
 
@@ -59,7 +59,7 @@ class LoginController
         }
     }
 
-    private function checkMissingCredentials()
+    private function checkMissingCredentials() : void
     {
         try 
         {
@@ -82,7 +82,7 @@ class LoginController
         }
     }
 
-    private function checkInvalidCredentials()
+    private function checkInvalidCredentials() : void
     {
         try 
         {

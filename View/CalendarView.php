@@ -8,6 +8,7 @@ class CalendarView
     private static $monthPost = "CalendarView::Month";
 
     private $month;
+
     /**
 	 * Create HTTP response
 	 *
@@ -32,7 +33,7 @@ class CalendarView
         return false;
     }
 
-    public function getMonth()
+    public function getMonth() : string
     {
         if (isset($_POST[self::$monthPost]))
         {
@@ -41,7 +42,7 @@ class CalendarView
         return date("m");
     }
 
-    public function setMonth($month)
+    public function setMonth(string $month) : void
     {
         if (isset($month))
         {
@@ -76,6 +77,14 @@ class CalendarView
         </div>
 		";
     }
+
+    private function checkMonth() : void
+    {
+        if ($this->month === null)
+        {
+            $this->month = date("m");
+        }
+    }
     
     private function generateDays(): string
     {
@@ -96,7 +105,7 @@ class CalendarView
         return $m;
     }
 
-    private function generateMonthSelector()
+    private function generateMonthSelector() : string
     {
         $ret = "";
 
@@ -108,19 +117,12 @@ class CalendarView
         return $ret;
     }
 
-    private function chooseDefault($selectValue, $month)
+    private function chooseDefault($selectValue, $month) : string
     {
         if ((int)$selectValue === (int)$month)
         {
             return "selected='true'";
         }
-    }
-
-    private function checkMonth()
-    {
-        if ($this->month === null)
-        {
-            $this->month = date("m");
-        }
+        return '';
     }
 }

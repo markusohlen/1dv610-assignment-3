@@ -39,14 +39,6 @@ ini_set('display_errors', 'On');
 
 session_start();
 
-// try {
-//     $mc = new \controller\MainController();
-
-//     $mc->renderView();
-// } catch (\Exception $e) {
-//     echo 'Caught exception: ',  $e->getMessage(), "<br> index.php";
-// }
-
 $mc = new \controller\MainController();
 
 $mc->renderView();
