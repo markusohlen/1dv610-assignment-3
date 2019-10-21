@@ -24,8 +24,7 @@ class MainController
         $this->lv = new \view\LoginView($this->cv);
         $this->rv = new \view\RegisterView();
         $this->dtv = new \view\DateTimeView();
-        $this->v = new \view\LayoutView();
-        
+        $this->v = new \view\LayoutView($this->dtv);
 
         $this->sm = new \model\SessionModel();
         $this->dm = new \model\DatabaseModel();
@@ -37,40 +36,15 @@ class MainController
 
     public function renderView() : void
     {
-        $view = $this->decideView();
-        $controller = $this->decideController($view);
-
-        $this->runController($controller);
-
-        $this->v->render($this->sm->getIsLoggedIn(), $this->dtv, $view);
-    }
-
-    private function runController($controller)
-    {
-        $controller->start();
-    }
-
-    private function decideView()
-    {
         if ($this->v->userWantsToShowRegisterForm())
         {
-            return $this->rv;
+            $this->rc->register();
+            $this->v->render($this->sm->getIsLoggedIn(), $this->rv);
         }
         else
         {
-            return $this->lv;
-        }
-    }
-
-    private function decideController($view)
-    {
-        if ($view instanceof \view\RegisterView)
-        {
-            return $this->rc;
-        }
-        else
-        { 
-            return $this->lc;
+            $this->lc->login();
+            $this->v->render($this->sm->getIsLoggedIn(), $this->lv);
         }
     }
 }

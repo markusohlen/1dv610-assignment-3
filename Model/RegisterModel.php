@@ -2,7 +2,8 @@
 
 namespace model;
 
-class RegisterModel {
+class RegisterModel 
+{
     public function checkUsernameLength(string $username) 
     {
         if (strlen($username) < \config\Constants::minUsernameLength) 

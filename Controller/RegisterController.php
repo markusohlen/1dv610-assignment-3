@@ -16,15 +16,15 @@ class RegisterController {
         $this->dbModel = $dbm;
     }
 
-    public function start() {
+    public function register() {
         if ($this->view->userPressedRegister() === false) {
             return;
         }
 
-        $this->register();
+        $this->doRegistration();
     }
 
-    private function register()
+    private function doRegistration()
     {
         $this->user = $this->view->getUserCredentials();
         

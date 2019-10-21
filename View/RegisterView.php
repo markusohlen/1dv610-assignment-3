@@ -41,7 +41,9 @@ class RegisterView
         $password = $this->getRequestPassword();
         $passwordRepeat = $this->getRequestPasswordRepeat();
 
-        return new \model\RegisterNewUser($username, $password, $passwordRepeat);
+        $t = new \model\RegisterNewUser($username, $password, $passwordRepeat);
+        // var_dump($t);
+        return $t;
     }
 
     public function userFilledInCredentials() : bool 

@@ -20,7 +20,7 @@ class LoginController
         $this->session = $sm;
     }
 
-    public function start() : void 
+    public function login() : void 
     {
         if ($this->view->userPressedLogout() === true && $this->session->getIsLoggedIn() === true) 
         {
@@ -28,15 +28,22 @@ class LoginController
             return;
         }
 
+        // Doesn't try to log in if the user hasn't pressed login yet
         if ($this->view->userPressedLogin() === false) 
         {
             return;
         }
 
-        $this->login();
+        $this->doLogin();
     }
 
-    private function login()
+    private function doLogout() : void 
+    {
+        $this->view->setLogoutMessage();
+        $this->session->setLoggedOut();
+    }
+
+    private function doLogin()
     {
         $this->user = $this->view->getUserCredentials();
 
@@ -45,7 +52,8 @@ class LoginController
 
         if ($this->hasException === false)
         {
-            $this->doLogin();
+            $this->view->setWelcomeMessage();
+            $this->session->setLoggedIn();
         }
     }
 
@@ -85,15 +93,5 @@ class LoginController
             $this->hasException = true;
             $this->view->setIncorrectCredentialsMessage();
         }
-    }
-
-    private function doLogin() : void {
-        $this->view->setWelcomeMessage();
-        $this->session->setLoggedIn();
-    }
-
-    private function doLogout() : void {
-        $this->view->setLogoutMessage();
-        $this->session->setLoggedOut();
     }
 }

@@ -36,12 +36,13 @@ class CalendarView
 
         $days = $this->generateDays();
         
+        // <form method='get'>
+        //     <input type='month' value='$date' name='' id=''>
+        //     <input type='submit' name='submit' value='Ändra datum'>
+        // </form>
 		return "
         <h1>Calendar</h1>
-        <form method='get'>
-            <input type='month' value='$date' name='' id=''>
-            <input type='submit' name='submit' value='Ändra datum'>
-        </form>
+        
         
         <div class='calendar'>
             $days
