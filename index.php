@@ -13,6 +13,7 @@ require_once('model/User.php');
 require_once('model/RegisterNewUser.php');
 require_once('model/Exceptions.php');
 require_once('model/Note.php');
+require_once('model/CalendarDatabase.php');
 
 // Views
 require_once('view/LoginView.php');

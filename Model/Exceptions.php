@@ -17,3 +17,8 @@ class MissingUsernameException extends \Exception {}
 class MissingPasswordException extends \Exception {}
 
 class InvalidCredentialsException extends \Exception {}
+
+// Calendar
+class TitleTooShortException extends \Exception {}
+
+class NoteTooShortException extends \Exception {}

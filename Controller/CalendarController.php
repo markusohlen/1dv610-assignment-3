@@ -6,22 +6,29 @@ class CalendarController
 {
     private $view;
     private $dayView;
+    private $db;
 
-    public function __construct(\view\CalendarView $cv, \view\DayView $dv)
+    public function __construct(\view\CalendarView $cv, \view\DayView $dv, \model\CalendarDatabase $db)
     {
         $this->view = $cv;
         $this->dayView = $dv;
+        $this->db = $db;
     }
 
     public function saveNote() : void
     {
         try {
             $note = $this->dayView->getNote();
-        } catch (\Exception $e) {
-            //throw $th;
+            $this->db->saveNote($note);
+        } 
+        catch (\model\NoteTooShortException $e) 
+        {
+            var_dump($e->getMessage());
         }
-        
-        var_dump($note);
+        catch (\model\TitleTooShortException $e) 
+        {
+            var_dump($e->getMessage());
+        }
     }
 
     public function doChangeDate() : void

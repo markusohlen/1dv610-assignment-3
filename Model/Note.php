@@ -28,11 +28,19 @@ class Note
 
     public function setTitle(string $title): void
     {
+        if (strlen($title) < 3)
+        {
+            throw new TitleTooShortException();
+        }
         $this->title = $title;
     }
 
     public function setNote(string $note): void
     {
+        if (strlen($note) < 3)
+        {
+            throw new NoteTooShortException();
+        }
         $this->note = $note;
     }
 }

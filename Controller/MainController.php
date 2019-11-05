@@ -19,6 +19,7 @@ class MainController
     // Models
     private $sm;
     private $dm;
+    private $cd;
 
     public function __construct()
     {
@@ -31,8 +32,9 @@ class MainController
 
         $this->sm = new \model\SessionModel();
         $this->dm = new \model\DatabaseModel();
+        $this->cd = new \model\CalendarDatabase();
 
-        $this->cc = new \controller\CalendarController($this->cv, $this->dv);
+        $this->cc = new \controller\CalendarController($this->cv, $this->dv, $this->cd);
         $this->lc = new \controller\LoginController($this->lv, $this->dm, $this->sm, $this->cc);
         $this->rc = new \controller\RegisterController($this->rv, $this->dm);
     }
