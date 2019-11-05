@@ -32,4 +32,28 @@ class RegisterNewUser
     {
         return $this->passwordRepeat;
     }
+
+    public function checkUsernameLength() : void
+    {
+        if (strlen($this->username) < \config\Constants::minUsernameLength) 
+        {
+            throw new UsernameTooShortException();
+        } 
+    }
+
+    public function checkPasswordLength() : void
+    {
+        if (strlen($this->password) < \config\Constants::minPasswordLength) 
+        {
+            throw new PasswordTooShortException();
+        }
+    }
+
+    public function passwordsMatch() : void
+    {
+        if ($this->password !== $this->passwordRepeat)
+        {
+            throw new PasswordsDoNotMatchException();
+        }
+    }
 }

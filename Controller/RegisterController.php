@@ -4,7 +4,6 @@ namespace controller;
 
 class RegisterController {
     private $view;
-    private $model;
     private $dbModel;
 
     // If anything is wrong with the credentials
@@ -13,7 +12,6 @@ class RegisterController {
 
     public function __construct(\view\RegisterView $rv, \model\DatabaseModel $dbm) {
         $this->view = $rv;
-        $this->model = new \model\RegisterModel();
         $this->dbModel = $dbm;
     }
 
@@ -44,7 +42,7 @@ class RegisterController {
     {
         try 
         {
-            $this->model->checkUsernameLength($this->user->getUsername());
+            $this->user->checkUsernameLength();
         } 
         catch (\model\UsernameTooShortException $e) 
         {
@@ -54,7 +52,7 @@ class RegisterController {
         
         try 
         {
-            $this->model->checkPasswordLength($this->user->getPassword());
+            $this->user->checkPasswordLength();
         } 
         catch (\model\PasswordTooShortException $e) 
         {
@@ -83,7 +81,7 @@ class RegisterController {
     {
         try 
         {
-            $this->model->passwordsMatch($this->user->getPassword(), $this->user->getPasswordRepeat());
+            $this->user->passwordsMatch();
         } 
         catch (\model\PasswordsDoNotMatchException $e) 
         {

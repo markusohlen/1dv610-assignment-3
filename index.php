@@ -7,7 +7,6 @@ require_once('config/connect.php');
 require_once('model/DatabaseModel.php');
 require_once('model/LoginModel.php');
 require_once('model/SessionModel.php');
-require_once('model/RegisterModel.php');
 require_once('model/DatabaseModel.php');
 require_once('model/User.php');
 require_once('model/RegisterNewUser.php');
