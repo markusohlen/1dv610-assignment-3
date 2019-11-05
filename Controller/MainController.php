@@ -41,9 +41,6 @@ class MainController
 
     public function renderView() : void
     {
-        var_dump($this->dv->wantsToSaveNote());
-        // var_dump($_POST);
-        // var_dump($_GET);
         if ($this->lv->userWantsToShowRegisterForm())
         {
             $this->rc->register();

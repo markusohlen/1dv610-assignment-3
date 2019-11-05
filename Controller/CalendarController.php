@@ -19,7 +19,7 @@ class CalendarController
     {
         try {
             $note = $this->dayView->getNote();
-            $this->db->saveNote($note);
+            $this->db->saveNote($note, "1", "2019-11-05");
         } 
         catch (\model\NoteTooShortException $e) 
         {

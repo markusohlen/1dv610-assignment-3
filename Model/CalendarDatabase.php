@@ -15,7 +15,7 @@ class CalendarDatabase
     private static $dbport = 'DB_PORT';
     private static $dbtable = 'DB_CALENDAR_TABLE';
 
-    public function saveNote($note) : void 
+    public function saveNote(\model\Note $note, $userID, $date) : void 
     {
         $title = $note->getTitle();
         $note2 = $note->getNote();
@@ -27,43 +27,35 @@ class CalendarDatabase
         $table = getenv(self::$dbtable);
 
         $sql = "INSERT INTO $table (title, note, ownerID, date)
-            VALUES ('$title', '$note2', '1', '2019-11-05')";
+            VALUES ('$title', '$note2', '$userID', '$date')";
         
         $conn->query($sql);
 
         $conn->close();
     }
 
-    public function fetchNotes() : array 
+    public function fetchNote($userID, $date) : \model\Note
     {
-        $notes = array();
-
         $conn = $this->createConnection();
 
         $this->checkConnectionError($conn); 
         
         $table = getenv(self::$dbtable);
         
-        $sql = "SELECT * FROM $table";
+        $sql = "SELECT * FROM $table
+            WHERE ownerID = '$userID' && date = '$date'";
 
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) 
         {
-            while($row = $result->fetch_assoc()) 
-            {
-                $title = $row[self::$title];
-                $note = $row[self::$note];
-
-                $note = new \model\Note($title, $note);
-
-                array_push($notes, $note);
-            }
+            $item = $result->fetch_assoc();
+            $note = new \model\Note($item["title"], $item["note"]);
         }
 
         $conn->close();
         
-        return $notes;
+        return $note;
     }
 
     private function createConnection() : \mysqli
