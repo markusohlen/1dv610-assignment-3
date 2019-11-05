@@ -51,11 +51,14 @@ class CalendarDatabase
         {
             $item = $result->fetch_assoc();
             $note = new \model\Note($item["title"], $item["note"]);
+            
+            $conn->close();
+        
+            return $note;
         }
 
-        $conn->close();
+        throw new \Exception("Error Processing Request", 1);
         
-        return $note;
     }
 
     private function createConnection() : \mysqli

@@ -23,16 +23,16 @@ class MainController
 
     public function __construct()
     {
+        $this->sm = new \model\SessionModel();
+        $this->dm = new \model\DatabaseModel();
+        $this->cd = new \model\CalendarDatabase();
+
         $this->cv = new \view\CalendarView();
         $this->lv = new \view\LoginView($this->cv);
         $this->rv = new \view\RegisterView();
         $this->dtv = new \view\DateTimeView();
         $this->v = new \view\LayoutView($this->dtv);
-        $this->dv = new \view\DayView();
-
-        $this->sm = new \model\SessionModel();
-        $this->dm = new \model\DatabaseModel();
-        $this->cd = new \model\CalendarDatabase();
+        $this->dv = new \view\DayView($this->cd, $this->sm);
 
         $this->cc = new \controller\CalendarController($this->cv, $this->dv, $this->cd, $this->sm);
         $this->lc = new \controller\LoginController($this->lv, $this->dm, $this->sm, $this->cc);
