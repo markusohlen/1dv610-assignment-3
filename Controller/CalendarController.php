@@ -5,15 +5,23 @@ namespace controller;
 class CalendarController
 {
     private $view;
+    private $dayView;
 
-    public function __construct(\view\CalendarView $cv)
+    public function __construct(\view\CalendarView $cv, \view\DayView $dv)
     {
         $this->view = $cv;
+        $this->dayView = $dv;
     }
 
-    public function run() : void
+    public function saveNote() : void
     {
-        $this->doChangeDate();
+        try {
+            $note = $this->dayView->getNote();
+        } catch (\Exception $e) {
+            //throw $th;
+        }
+        
+        var_dump($note);
     }
 
     public function doChangeDate() : void

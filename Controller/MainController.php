@@ -32,13 +32,16 @@ class MainController
         $this->sm = new \model\SessionModel();
         $this->dm = new \model\DatabaseModel();
 
-        $this->cc = new \controller\CalendarController($this->cv);
+        $this->cc = new \controller\CalendarController($this->cv, $this->dv);
         $this->lc = new \controller\LoginController($this->lv, $this->dm, $this->sm, $this->cc);
         $this->rc = new \controller\RegisterController($this->rv, $this->dm);
     }
 
     public function renderView() : void
     {
+        var_dump($this->dv->wantsToSaveNote());
+        // var_dump($_POST);
+        // var_dump($_GET);
         if ($this->lv->userWantsToShowRegisterForm())
         {
             $this->rc->register();
@@ -50,10 +53,14 @@ class MainController
             
             $this->v->render(true, $this->cv);
         }
+        else if ($this->sm->getIsLoggedIn() === true && $this->dv->wantsToSaveNote() === true)
+        {
+            var_dump($this->dv->wantsToSaveNote());
+            $this->cc->saveNote();
+            $this->v->render(true, $this->dv);
+        }
         else if ($this->sm->getIsLoggedIn() === true && $this->cv->wantsToShowDay() === true)
         {
-            var_dump($this->cv->wantsToShowDay());
-            // $this->cc->;
             $this->v->render(true, $this->dv);
         }
         else

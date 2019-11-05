@@ -17,14 +17,15 @@ class DayView
 
 		return $response;
     }
-    
-    public function wantsToChangeDayDate(): bool
+
+    public function wantsToSaveNote()
     {
-        if (isset($_POST[self::$changeDate]))
-        {
-            return true;
-        }
-        return false;
+        return isset($_POST[self::$changeDate]);
+    }
+
+    public function getNote()
+    {
+        return new \model\Note($this->getRequestTitle(), $this->getRequestNote());
     }
 
 	/**
@@ -42,7 +43,7 @@ class DayView
             <input name='title' id='title' type='text'>
             <br>
             <label for='note'>Note</p>
-            <textarea rows='4' cols='50' id='note' name='comment' placeholder='Enter text here...'></textarea>
+            <textarea rows='4' cols='50' id='note' name='note' placeholder='Enter text here...'></textarea>
             <br>
             <input type='submit' name='" . self::$changeDate . "' value='Save'>
         </form>
@@ -51,5 +52,30 @@ class DayView
 
         </div>
 		";
+    }
+
+    private function getRequestYear(): string
+    {
+        return $_GET["year"];
+    }
+
+    private function getRequestMonth(): string
+    {
+        return $_GET["month"];
+    }
+
+    private function getRequestDay(): string
+    {
+        return $_GET["day"];
+    }
+
+    private function getRequestTitle(): string
+    {
+        return $_POST["title"];
+    }
+
+    private function getRequestNote(): string
+    {
+        return $_POST["note"];
     }
 }
