@@ -37,7 +37,6 @@ class CalendarController
 
     public function doChangeDate() : void
     {
-        $date = $this->view->getMonth();
-        $this->view->setMonth($date);
+        $this->view->setMonth();
     }
 }

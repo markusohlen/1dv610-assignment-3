@@ -35,7 +35,7 @@ class CalendarView
         return isset($_GET["day"]);
     }
 
-    public function getMonth() : string
+    private function getMonth() : string
     {
         if (isset($_POST[self::$monthPost]))
         {
@@ -44,8 +44,9 @@ class CalendarView
         return date("m");
     }
 
-    public function setMonth(string $month) : void
+    public function setMonth() : void
     {
+        $month = $this->getMonth();
         if (isset($month))
         {
             $this->month = $month;
