@@ -6,6 +6,7 @@ class DatabaseModel
 {
     private static $username = 'username';
     private static $password = 'password';
+    private static $userID = 'id';
 
     // Database
     private static $dbhost = 'DB_HOST';
@@ -57,6 +58,30 @@ class DatabaseModel
         $conn->close();
     }
 
+    public function fetchUserID($username) : int
+    {
+        $id = null;
+        $conn = $this->createConnection();
+
+        $this->checkConnectionError($conn); 
+        
+        $table = getenv(self::$dbtable);
+        
+        $sql = "SELECT id FROM $table
+            WHERE username = '$username'";
+
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) 
+        {
+            $id = $result->fetch_assoc()["id"];
+        }
+
+        $conn->close();
+        
+        return $id;
+    }
+
     private function fetchUsers() : array 
     {
         $users = array();
@@ -77,8 +102,9 @@ class DatabaseModel
             {
                 $username = $row[self::$username];
                 $password = $row[self::$password];
+                $userID = $row[self::$userID];
 
-                $userCred = new \model\User($username, $password);
+                $userCred = new \model\User($username, $password, $userID);
 
                 array_push($users, $userCred);
             }

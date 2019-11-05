@@ -4,7 +4,7 @@ namespace model;
 
 class SessionModel
 {
-    private static $isLoggedIn = __CLASS__ . "::IsLoggedIn";
+    private static $userID = __CLASS__ . "::UserID";
 
     public function __construct()
     {
@@ -12,19 +12,19 @@ class SessionModel
         assert(session_status() === PHP_SESSION_ACTIVE);
     }
 
-    public function setLoggedIn() : void 
+    public function setUserID(int $id) : void 
     {
-        $_SESSION[self::$isLoggedIn] = true;
+        $_SESSION[self::$userID] = $id;
     }
 
     public function setLoggedOut() : void 
     {
-        $_SESSION[self::$isLoggedIn] = false;
+        $_SESSION[self::$userID] = 0;
     }
 
     public function getIsLoggedIn() : bool 
     {
-        if (isset($_SESSION[self::$isLoggedIn]) && $_SESSION[self::$isLoggedIn] === true) 
+        if (isset($_SESSION[self::$userID]) && $_SESSION[self::$userID] !== 0) 
         {
             return true;
         }

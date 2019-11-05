@@ -55,7 +55,8 @@ class LoginController
         if ($this->hasException === false)
         {
             $this->view->setWelcomeMessage();
-            $this->session->setLoggedIn();
+            $id = $this->dbModel->fetchUserID($this->user->getUsername());
+            $this->session->setUserID($id);
         }
     }
 
