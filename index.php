@@ -20,6 +20,7 @@ require_once('view/LayoutView.php');
 require_once('view/RegisterView.php');
 require_once('view/RegisterView.php');
 require_once('view/CalendarView.php');
+require_once('view/DayView.php');
 
 // Controllers
 require_once('controller/LoginController.php');

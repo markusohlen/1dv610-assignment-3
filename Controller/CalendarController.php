@@ -13,13 +13,10 @@ class CalendarController
 
     public function run() : void
     {
-        if ($this->view->wantsToChangeCalendarDate() === true)
-        {
-            $this->doChangeDate();
-        }
+        $this->doChangeDate();
     }
 
-    private function doChangeDate() : void
+    public function doChangeDate() : void
     {
         $date = $this->view->getMonth();
         $this->view->setMonth($date);

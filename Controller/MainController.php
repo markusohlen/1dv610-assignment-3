@@ -9,6 +9,7 @@ class MainController
     private $rv;
     private $dtv;
     private $v;
+    private $dv;
 
     // Controllers
     private $lc;
@@ -26,6 +27,7 @@ class MainController
         $this->rv = new \view\RegisterView();
         $this->dtv = new \view\DateTimeView();
         $this->v = new \view\LayoutView($this->dtv);
+        $this->dv = new \view\DayView();
 
         $this->sm = new \model\SessionModel();
         $this->dm = new \model\DatabaseModel();
@@ -42,10 +44,22 @@ class MainController
             $this->rc->register();
             $this->v->render($this->sm->getIsLoggedIn(), $this->rv);
         }
+        else if ($this->sm->getIsLoggedIn() === true && $this->cv->wantsToChangeCalendarDate() === true)
+        {
+            $this->cc->doChangeDate();
+            
+            $this->v->render(true, $this->cv);
+        }
+        else if ($this->sm->getIsLoggedIn() === true && $this->cv->wantsToShowDay() === true)
+        {
+            var_dump($this->cv->wantsToShowDay());
+            // $this->cc->;
+            $this->v->render(true, $this->dv);
+        }
         else
         {
             $this->lc->login();
-            $this->cc->run();
+            // var_dump($_GET);
             $this->v->render($this->sm->getIsLoggedIn(), $this->lv);
             
         }

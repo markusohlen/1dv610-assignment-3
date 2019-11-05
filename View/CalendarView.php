@@ -30,6 +30,11 @@ class CalendarView
         return false;
     }
 
+    public function wantsToShowDay(): bool
+    {
+        return isset($_GET["day"]);
+    }
+
     public function getMonth() : string
     {
         if (isset($_POST[self::$monthPost]))
