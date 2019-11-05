@@ -34,7 +34,7 @@ class MainController
         $this->dm = new \model\DatabaseModel();
         $this->cd = new \model\CalendarDatabase();
 
-        $this->cc = new \controller\CalendarController($this->cv, $this->dv, $this->cd);
+        $this->cc = new \controller\CalendarController($this->cv, $this->dv, $this->cd, $this->sm);
         $this->lc = new \controller\LoginController($this->lv, $this->dm, $this->sm, $this->cc);
         $this->rc = new \controller\RegisterController($this->rv, $this->dm);
     }

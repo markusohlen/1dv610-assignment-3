@@ -22,6 +22,11 @@ class SessionModel
         $_SESSION[self::$userID] = 0;
     }
 
+    public function getUserID() : int
+    {
+        return $_SESSION[self::$userID];
+    }
+
     public function getIsLoggedIn() : bool 
     {
         if (isset($_SESSION[self::$userID]) && $_SESSION[self::$userID] !== 0) 

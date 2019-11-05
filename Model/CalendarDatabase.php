@@ -15,7 +15,7 @@ class CalendarDatabase
     private static $dbport = 'DB_PORT';
     private static $dbtable = 'DB_CALENDAR_TABLE';
 
-    public function saveNote(\model\Note $note, $userID, $date) : void 
+    public function saveNote(\model\Note $note, $userID, string $date) : void 
     {
         $title = $note->getTitle();
         $note2 = $note->getNote();

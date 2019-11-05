@@ -28,6 +28,11 @@ class DayView
         return new \model\Note($this->getRequestTitle(), $this->getRequestNote());
     }
 
+    public function getDate()
+    {
+        return new \model\Date($this->getRequestYear(), $this->getRequestMonth(), $this->getRequestDay());
+    }
+
 	/**
     * Generate HTML code for the day
     

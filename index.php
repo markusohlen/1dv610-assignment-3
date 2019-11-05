@@ -14,6 +14,7 @@ require_once('model/RegisterNewUser.php');
 require_once('model/Exceptions.php');
 require_once('model/Note.php');
 require_once('model/CalendarDatabase.php');
+require_once('model/Date.php');
 
 // Views
 require_once('view/LoginView.php');
