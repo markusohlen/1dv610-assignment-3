@@ -43,31 +43,55 @@ class MainController
     {
         if ($this->lv->userWantsToShowRegisterForm())
         {
-            $this->rc->register();
-            $this->v->render($this->sm->getIsLoggedIn(), $this->rv);
+            $this->showRegisterForm();
         }
         else if ($this->sm->getIsLoggedIn() === true && $this->cv->wantsToChangeCalendarDate() === true)
         {
-            $this->cc->doChangeDate();
-            
-            $this->v->render(true, $this->cv);
+            $this->changeCalendarDate();
         }
         else if ($this->sm->getIsLoggedIn() === true && $this->dv->wantsToSaveNote() === true)
         {
-            $this->cc->saveNote();
-            $this->v->render(true, $this->dv);
+            $this->saveNote();
         }
         else if ($this->sm->getIsLoggedIn() === true && $this->cv->wantsToShowDay() === true)
         {
-            $date = $this->cv->getDate();
-            $this->dv->setDate($date);
-
-            $this->v->render(true, $this->dv);
+            $this->showDay();
         }
         else
         {
-            $this->lc->login();
-            $this->v->render($this->sm->getIsLoggedIn(), $this->lv);
+            $this->login();
         }
+    }
+
+    private function showRegisterForm() : void
+    {
+        $this->rc->register();
+        $this->v->render($this->sm->getIsLoggedIn(), $this->rv);
+    }
+
+    private function changeCalendarDate() : void
+    {
+        $this->cc->doChangeDate();
+        $this->v->render(true, $this->cv);
+    }
+
+    private function saveNote() : void
+    {
+        $this->cc->saveNote();
+        $this->v->render(true, $this->dv);
+    }
+
+    private function showDay() : void
+    {
+        $date = $this->cv->getDate();
+        $this->dv->setDate($date);
+
+        $this->v->render(true, $this->dv);
+    }
+
+    private function login()
+    {
+        $this->lc->login();
+        $this->v->render($this->sm->getIsLoggedIn(), $this->lv);
     }
 }
