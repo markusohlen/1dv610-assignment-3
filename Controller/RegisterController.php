@@ -32,6 +32,8 @@ class RegisterController {
         $this->checkUserExists();
         $this->checkPasswordsMatch();
 
+        // Keep the code below since it is required in order to catch multiple exceptions
+        // and don't save a new user if an exception has occured
         if ($this->hasException === false)
         {
             $this->dbModel->registerUser($this->user->getUsername(), $this->user->getPassword());
