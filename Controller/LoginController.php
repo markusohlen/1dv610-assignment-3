@@ -10,9 +10,6 @@ class LoginController
     private $session;
     private $calendarController;
 
-    private $hasException = false;
-    private $user;
-
     public function __construct(\view\LoginView $lv, \model\DatabaseModel $dbm, \model\SessionModel $sm, \controller\CalendarController $cc)
     {
         $this->view = $lv;
@@ -47,53 +44,31 @@ class LoginController
 
     private function doLogin() : void
     {
-        $this->user = $this->view->getUserCredentials();
+        $user = $this->view->getUserCredentials();
 
-        $this->checkMissingCredentials();
-        $this->checkInvalidCredentials();
-
-        if ($this->hasException === false)
-        {
-            $this->view->setWelcomeMessage();
-            $id = $this->dbModel->fetchUserID($this->user->getUsername());
-            $this->session->setUserID($id);
-        }
-    }
-
-    private function checkMissingCredentials() : void
-    {
         try 
         {
-            $this->model->checkMissingUsername($this->user->getUsername());
+            $this->model->checkMissingUsername($user->getUsername());
+            $this->model->checkMissingPassword($user->getPassword());
+
+            $userToCompare = $this->dbModel->fetchUser($user->getUsername());
+
+            $this->model->checkPasswordsMatch($user->getPassword(), $userToCompare->getPassword());
+
+            $this->view->setWelcomeMessage();
+            $id = $this->dbModel->fetchUserID($user->getUsername());
+            $this->session->setUserID($id);
         }
         catch (\model\MissingUsernameException $e)  
         {
-            $this->hasException = true;
             $this->view->setMissingUsernameMessage();
         }
-
-        try 
-        {
-            $this->model->checkMissingPassword($this->user->getPassword());
-        } 
         catch (\model\MissingPasswordException $e)
         {
-            $this->hasException = true;
             $this->view->setMissingPasswordMessage();
-        }
-    }
-
-    private function checkInvalidCredentials() : void
-    {
-        try 
-        {
-            $userToCompare = $this->dbModel->fetchUser($this->user->getUsername());
-
-            $this->model->checkPasswordsMatch($this->user->getPassword(), $userToCompare->getPassword());
         }
         catch (\model\InvalidCredentialsException $e)
         {
-            $this->hasException = true;
             $this->view->setIncorrectCredentialsMessage();
         }
     }
