@@ -21,7 +21,7 @@ class CalendarController
     {
         try {
             $note = $this->dayView->getNote();
-            $date = $this->dayView->getDate();
+            $date = $this->view->getDate();
             var_dump($date);
             $this->db->saveNote($note, $this->sm->getUserID(), $date->getDate());
         } 

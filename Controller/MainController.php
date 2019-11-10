@@ -54,20 +54,20 @@ class MainController
         }
         else if ($this->sm->getIsLoggedIn() === true && $this->dv->wantsToSaveNote() === true)
         {
-            var_dump($this->dv->wantsToSaveNote());
             $this->cc->saveNote();
             $this->v->render(true, $this->dv);
         }
         else if ($this->sm->getIsLoggedIn() === true && $this->cv->wantsToShowDay() === true)
         {
+            $date = $this->cv->getDate();
+            $this->dv->setDate($date);
+
             $this->v->render(true, $this->dv);
         }
         else
         {
             $this->lc->login();
-            // var_dump($_GET);
             $this->v->render($this->sm->getIsLoggedIn(), $this->lv);
-            
         }
     }
 }
