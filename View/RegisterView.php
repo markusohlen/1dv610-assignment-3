@@ -95,9 +95,9 @@ class RegisterView
             $currentPassword = $this->getRequestPassword();
             $currentPasswordRepeat = $this->getRequestPasswordRepeat();
 		}
-
+        var_dump($_GET);
 		return '
-        <a href="?">Back to Login</a><div class="container" >
+        <a href="/1dv610-assignment-3">Back to Login</a><div class="container" >
           
                 <h2>Register new user</h2>
                 <form action="?register" method="post" enctype="multipart/form-data">

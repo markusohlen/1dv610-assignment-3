@@ -36,7 +36,7 @@ class MainController
 
         $this->cc = new \controller\CalendarController($this->cv, $this->dv, $this->cd, $this->sm);
         $this->lc = new \controller\LoginController($this->lv, $this->dm, $this->sm, $this->cc);
-        $this->rc = new \controller\RegisterController($this->rv, $this->dm);
+        $this->rc = new \controller\RegisterController($this->rv, $this->dm, $this->sm);
     }
 
     public function renderView() : void

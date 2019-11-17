@@ -126,6 +126,10 @@ class LoginView
 	private function generateLoginFormHTML() : string 
 	{
 		$currentUsername = "";
+		if (isset($_POST["RegisterView::UserName"]))
+		{
+			$currentUsername = $_POST["RegisterView::UserName"];
+		}
 		if ($this->userPressedLogin() === true) 
 		{
 			$currentUsername = $this->getRequestUsername();

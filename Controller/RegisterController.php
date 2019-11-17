@@ -5,14 +5,16 @@ namespace controller;
 class RegisterController {
     private $view;
     private $dbModel;
+    private $session;
 
     // If anything is wrong with the credentials
     private $hasException = false;
     private $user;
 
-    public function __construct(\view\RegisterView $rv, \model\DatabaseModel $dbm) {
+    public function __construct(\view\RegisterView $rv, \model\DatabaseModel $dbm, \model\SessionModel $sm) {
         $this->view = $rv;
         $this->dbModel = $dbm;
+        $this->session = $sm;
     }
 
     public function register() : void
@@ -37,6 +39,10 @@ class RegisterController {
         if ($this->hasException === false)
         {
             $this->dbModel->registerUser($this->user->getUsername(), $this->user->getPassword());
+            Header("Location: /1dv610-assignment-3");
+            // $_GET["register"] = "/1dv610-assignment-3";
+            // $id = $this->dbModel->fetchUserID($this->user->getUsername());
+            // $this->session->setUserID($id);
         }
     }
 
