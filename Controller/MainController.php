@@ -28,7 +28,7 @@ class MainController
         $this->cd = new \model\CalendarDatabase();
 
         $this->cv = new \view\CalendarView();
-        $this->lv = new \view\LoginView($this->cv);
+        $this->lv = new \view\LoginView($this->cv, $this->sm);
         $this->rv = new \view\RegisterView();
         $this->dtv = new \view\DateTimeView();
         $this->v = new \view\LayoutView($this->dtv);

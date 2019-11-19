@@ -5,6 +5,7 @@ namespace model;
 class SessionModel
 {
     private static $userID = __CLASS__ . "::UserID";
+    private static $username = __CLASS__ . "::Username";
 
     public function __construct()
     {
@@ -34,5 +35,25 @@ class SessionModel
             return true;
         }
         return false;
+    }
+
+    public function setUsername(string $username) : void
+    {
+        $_SESSION[self::$username] = $username;
+    }
+
+    public function getUsername() : string
+    {
+        return $_SESSION[self::$username];
+    }
+
+    public function unsetUsername() : void
+    {
+        unset($_SESSION[self::$username]);
+    }
+
+    public function usernameIsSet() : bool
+    {
+        return isset($_SESSION[self::$username]);
     }
 }

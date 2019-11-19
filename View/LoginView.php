@@ -13,13 +13,15 @@ class LoginView
 	private static $showRegister = 'register';
 
 	private $db;
+	private $sm;
 
 	private $message = "";
 
-	public function __construct(\view\CalendarView $cv) 
+	public function __construct(\view\CalendarView $cv, \model\SessionModel $sm) 
 	{
 		$this->db = new \model\DatabaseModel();
 		$this->cv = $cv;
+		$this->sm = $sm;
 	}
 
 	/**
@@ -126,9 +128,10 @@ class LoginView
 	private function generateLoginFormHTML() : string 
 	{
 		$currentUsername = "";
-		if (isset($_POST["RegisterView::UserName"]))
+		if ($this->sm->usernameIsSet() === true)
 		{
-			$currentUsername = $_POST["RegisterView::UserName"];
+			$currentUsername = $this->sm->getUsername();
+			$this->sm->unsetUsername();
 		}
 		if ($this->userPressedLogin() === true) 
 		{

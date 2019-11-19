@@ -30,6 +30,9 @@ class RegisterController {
             $this->checkCredentials($user);
 
             $this->dbModel->registerUser($user->getUsername(), $user->getPassword());
+
+            $this->session->setUsername($user->getUsername());
+
             Header("Location: /assignment-3/");
         }
         catch (\model\UsernameTooShortException $e) 
