@@ -11,6 +11,8 @@ class UserAlreadyExistsException extends \Exception {}
 
 class UsernameTooShortException extends \Exception {}
 
+class MissingAllCredentialsException extends \Exception {}
+
 // Login
 class MissingUsernameException extends \Exception {}
 

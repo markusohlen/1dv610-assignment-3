@@ -13,6 +13,11 @@ class RegisterNewUser
 
     public function __construct(string $username, string $password, string $passwordRepeat)
     {
+        if (strlen($username) === 0 && strlen($password) === 0)
+        {
+            throw new MissingAllCredentialsException();
+        }
+
         $this->username = $username;
         $this->password = $password;
         $this->passwordRepeat = $passwordRepeat;

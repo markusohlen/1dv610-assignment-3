@@ -28,73 +28,47 @@ class RegisterController {
 
     private function doRegistration() : void
     {
-        $this->user = $this->view->getUserCredentials();
+        try {
+            $user = $this->view->getUserCredentials();
         
-        $this->checkShortUserCredentials();
-        $this->checkUserExists();
-        $this->checkPasswordsMatch();
+            $this->checkCredentials($user);
 
-        // Keep the code below since it is required in order to catch multiple exceptions
-        // and don't save a new user if an exception has occured
-        if ($this->hasException === false)
-        {
-            $this->dbModel->registerUser($this->user->getUsername(), $this->user->getPassword());
+            $this->dbModel->registerUser($user->getUsername(), $user->getPassword());
             Header("Location: /1dv610-assignment-3");
-            // $_GET["register"] = "/1dv610-assignment-3";
-            // $id = $this->dbModel->fetchUserID($this->user->getUsername());
-            // $this->session->setUserID($id);
         }
-    }
-
-    private function checkShortUserCredentials() : void
-    {
-        try 
-        {
-            $this->user->checkUsernameLength();
-        } 
         catch (\model\UsernameTooShortException $e) 
         {
-            $this->hasException = true;
             $this->view->setInvalidUsernameMessage();
         }
-        
-        try 
-        {
-            $this->user->checkPasswordLength();
-        } 
         catch (\model\PasswordTooShortException $e) 
         {
-            $this->hasException = true;
+            $this->view->setPasswordTooShortMessage();
+        }
+        catch (\model\UserAlreadyExistsException $e) 
+        {
+            $this->view->setUsernameExistsMessage();
+        }
+        catch (\model\PasswordsDoNotMatchException $e) 
+        {
+            $this->view->setPasswordsDoNotMatchMessage();
+        }
+        catch (\model\MissingAllCredentialsException $e) 
+        {
+            $this->view->setInvalidUsernameMessage();
             $this->view->setPasswordTooShortMessage();
         }
     }
 
-    private function checkUserExists() : void
+    private function checkCredentials(\model\RegisterNewUser $user) : void
     {
-        try 
-        {
-            if ($this->dbModel->userExists($this->user->getUsername()) === true)
-            {
-                throw new \model\UserAlreadyExistsException();
-            }
-        } 
-        catch (\model\UserAlreadyExistsException $e) 
-        {
-            $this->hasException = true;
-            $this->view->setUsernameExistsMessage();
-        }
-    }
+        $user->checkUsernameLength();
+        $user->checkPasswordLength();
 
-    private function checkPasswordsMatch() : void
-    {
-        try 
+        if ($this->dbModel->userExists($user->getUsername()) === true)
         {
-            $this->user->passwordsMatch();
-        } 
-        catch (\model\PasswordsDoNotMatchException $e) 
-        {
-            $this->hasException = true;
-            $this->view->setPasswordsDoNotMatchMessage();
+            throw new \model\UserAlreadyExistsException();
         }
+
+        $user->passwordsMatch();
     }
 }

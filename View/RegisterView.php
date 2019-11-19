@@ -95,7 +95,7 @@ class RegisterView
             $currentPassword = $this->getRequestPassword();
             $currentPasswordRepeat = $this->getRequestPasswordRepeat();
 		}
-        var_dump($_GET);
+        // var_dump($_GET);
 		return '
         <a href="/1dv610-assignment-3">Back to Login</a><div class="container" >
           
