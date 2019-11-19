@@ -21,6 +21,10 @@ class LoginController
 
     public function login() : void 
     {
+        if ($this->session->usernameIsSet() === true)
+        {
+            $this->view->setNewlyRegisteredMessage();
+        }
         if ($this->view->userPressedLogout() === true && $this->session->getIsLoggedIn() === true) 
         {
             $this->doLogout();

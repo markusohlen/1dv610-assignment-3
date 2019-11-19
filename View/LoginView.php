@@ -104,6 +104,11 @@ class LoginView
 		$this->message = "Bye bye!";
 	}
 
+	public function setNewlyRegisteredMessage()
+	{
+		$this->message = "Registered new user.";
+	}
+
 	/**
     * Generate HTML code for the logout component
     *
