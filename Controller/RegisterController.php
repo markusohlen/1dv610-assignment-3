@@ -33,7 +33,7 @@ class RegisterController {
 
             $this->session->setUsername($user->getUsername());
 
-            Header("Location: /assignment-3/");
+            Header("Location: " . \config\Constants::loginURL);
         }
         catch (\model\UsernameTooShortException $e) 
         {

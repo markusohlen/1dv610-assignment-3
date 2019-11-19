@@ -102,7 +102,7 @@ class RegisterView
 		}
 
 		return '
-        <a href="/1dv610-assignment-3">Back to login</a><div class="container" >
+        <a href="' . \config\Constants::loginURL . '">Back to login</a><div class="container" >
           
                 <h2>Register new user</h2>
                 <form method="post" enctype="multipart/form-data">
