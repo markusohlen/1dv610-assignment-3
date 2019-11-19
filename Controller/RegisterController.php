@@ -7,10 +7,6 @@ class RegisterController {
     private $dbModel;
     private $session;
 
-    // If anything is wrong with the credentials
-    private $hasException = false;
-    private $user;
-
     public function __construct(\view\RegisterView $rv, \model\DatabaseModel $dbm, \model\SessionModel $sm) {
         $this->view = $rv;
         $this->dbModel = $dbm;
@@ -34,7 +30,7 @@ class RegisterController {
             $this->checkCredentials($user);
 
             $this->dbModel->registerUser($user->getUsername(), $user->getPassword());
-            Header("Location: /1dv610-assignment-3");
+            Header("Location: /assignment-3/");
         }
         catch (\model\UsernameTooShortException $e) 
         {
@@ -57,12 +53,17 @@ class RegisterController {
             $this->view->setInvalidUsernameMessage();
             $this->view->setPasswordTooShortMessage();
         }
+        catch (\model\InvalidCharactersException $e) 
+        {
+            $this->view->setInvalidCharactersMessage();
+        }
     }
 
     private function checkCredentials(\model\RegisterNewUser $user) : void
     {
         $user->checkUsernameLength();
         $user->checkPasswordLength();
+        $user->checkInvalidCharcters();
 
         if ($this->dbModel->userExists($user->getUsername()) === true)
         {

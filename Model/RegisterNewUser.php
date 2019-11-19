@@ -13,6 +13,7 @@ class RegisterNewUser
 
     public function __construct(string $username, string $password, string $passwordRepeat)
     {
+        // Empty username and password
         if (strlen($username) === 0 && strlen($password) === 0)
         {
             throw new MissingAllCredentialsException();
@@ -51,6 +52,14 @@ class RegisterNewUser
         if (strlen($this->password) < \config\Constants::minPasswordLength) 
         {
             throw new PasswordTooShortException();
+        }
+    }
+
+    public function checkInvalidCharcters() : void
+    {
+        if ($this->username !== strip_tags($this->username))
+        {
+            throw new InvalidCharactersException();
         }
     }
 

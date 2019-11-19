@@ -13,6 +13,8 @@ class UsernameTooShortException extends \Exception {}
 
 class MissingAllCredentialsException extends \Exception {}
 
+class InvalidCharactersException extends \Exception {}
+
 // Login
 class MissingUsernameException extends \Exception {}
 

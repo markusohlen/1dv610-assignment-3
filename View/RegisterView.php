@@ -64,8 +64,8 @@ class RegisterView
 
     public function setPasswordTooShortMessage() : void
     {
-        $minPassworLength = \config\Constants::minPasswordLength;
-        $this->message .= "Password has too few characters, at least $minPassworLength characters.<br>";
+        $minPasswordLength = \config\Constants::minPasswordLength;
+        $this->message .= "Password has too few characters, at least $minPasswordLength characters.<br>";
     }
 
     public function setUsernameExistsMessage() : void
@@ -75,7 +75,12 @@ class RegisterView
 
     public function setPasswordsDoNotMatchMessage() : void
     {
-        $this->message .= "Passwords do not match.";
+        $this->message .= "Passwords do not match.<br>";
+    }
+
+    public function setInvalidCharactersMessage() : void
+    {
+        $this->message .= "Username contains invalid characters.<br>";
     }
 
     /**
@@ -91,16 +96,16 @@ class RegisterView
 
         if ($this->userPressedRegister() === true) 
         {
-            $currentUsername = $this->getRequestUsername();
+            $currentUsername = strip_tags($this->getRequestUsername());
             $currentPassword = $this->getRequestPassword();
             $currentPasswordRepeat = $this->getRequestPasswordRepeat();
 		}
-        // var_dump($_GET);
+
 		return '
-        <a href="/1dv610-assignment-3">Back to Login</a><div class="container" >
+        <a href="/1dv610-assignment-3">Back to login</a><div class="container" >
           
                 <h2>Register new user</h2>
-                <form action="?register" method="post" enctype="multipart/form-data">
+                <form method="post" enctype="multipart/form-data">
                     <fieldset>
                     <legend>Register a new user - Write username and password</legend>
                         <p id="' . self::$registerViewMessage . '">' . $this->message .'</p>
