@@ -50,7 +50,7 @@ class DatabaseModel
         
         $table = getenv(self::$dbtable);
 
-        $sql = "INSERT INTO $table (username, password)
+        $sql = "INSERT INTO $table (" . self::$username . ", " . self::$password . ")
             VALUES ('$username', '$password')";
         
         $conn->query($sql);
@@ -67,14 +67,14 @@ class DatabaseModel
         
         $table = getenv(self::$dbtable);
         
-        $sql = "SELECT id FROM $table
-            WHERE username = '$username'";
+        $sql = "SELECT " . self::$userID . " FROM $table
+            WHERE " . self::$username . " = '$username'";
 
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) 
         {
-            $id = $result->fetch_assoc()["id"];
+            $id = $result->fetch_assoc()[self::$userID];
         }
 
         $conn->close();

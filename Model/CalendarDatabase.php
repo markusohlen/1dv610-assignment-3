@@ -6,6 +6,7 @@ class CalendarDatabase
 {
     private static $title = 'title';
     private static $note = 'note';
+    private static $ownerID = 'ownerID';
 
     // Database
     private static $dbhost = 'DB_HOST';
@@ -26,7 +27,11 @@ class CalendarDatabase
         
         $table = getenv(self::$dbtable);
 
-        $sql = "INSERT INTO $table (title, note, ownerID, date)
+        $dbTitle = self::$title;
+        $dbNote = self::$note;
+        $dbOwnerID = self::$ownerID;
+
+        $sql = "INSERT INTO $table ($dbTitle, $dbNote, $dbOwnerID, date)
             VALUES ('$title', '$note2', '$userID', '$date')";
         
         $conn->query($sql);
@@ -42,15 +47,17 @@ class CalendarDatabase
         
         $table = getenv(self::$dbtable);
         
+        $dbOwnerID = self::$ownerID;
+
         $sql = "SELECT * FROM $table
-            WHERE ownerID = '$userID' && date = '$date'";
+            WHERE $dbOwnerID = '$userID' && date = '$date'";
 
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) 
         {
             $item = $result->fetch_assoc();
-            $note = new \model\Note($item["title"], $item["note"]);
+            $note = new \model\Note($item[self::$title], $item[self::$note]);
             
             $conn->close();
         

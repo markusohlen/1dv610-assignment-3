@@ -61,10 +61,11 @@ class DayView
             $content = "";
         }
         
-        // var_dump($note);
-        
 		return "
         <h1>Day</h1>
+
+        <a href='" . \config\Constants::loginURL . "'>Back to calendar</a>
+        <br>
 
         <form method='post'>
             <label for='" . self::$title . "'>Title</p>
