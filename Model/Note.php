@@ -28,7 +28,7 @@ class Note
 
     public function setTitle(string $title): void
     {
-        if (strlen($title) < 3)
+        if (strlen($title) < \config\Constants::minTitleLength)
         {
             throw new TitleTooShortException();
         }
@@ -37,7 +37,7 @@ class Note
 
     public function setNote(string $note): void
     {
-        if (strlen($note) < 3)
+        if (strlen($note) < \config\Constants::minNoteLength)
         {
             throw new NoteTooShortException();
         }

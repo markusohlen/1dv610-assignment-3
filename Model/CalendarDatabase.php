@@ -7,6 +7,7 @@ class CalendarDatabase
     private static $title = 'title';
     private static $note = 'note';
     private static $ownerID = 'ownerID';
+    private static $date = 'date';
 
     // Database
     private static $dbhost = 'DB_HOST';
@@ -30,10 +31,36 @@ class CalendarDatabase
         $dbTitle = self::$title;
         $dbNote = self::$note;
         $dbOwnerID = self::$ownerID;
+        $dbDate = self::$date;
 
-        $sql = "INSERT INTO $table ($dbTitle, $dbNote, $dbOwnerID, date)
+        $sql = "INSERT INTO $table ($dbTitle, $dbNote, $dbOwnerID, $dbDate)
             VALUES ('$title', '$note2', '$userID', '$date')";
         
+        $conn->query($sql);
+
+        $conn->close();
+    }
+
+    public function updateNote(\model\Note $note, $userID, string $date) : void 
+    {
+        $title = $note->getTitle();
+        $note2 = $note->getNote();
+
+        $conn = $this->createConnection();
+        
+        $this->checkConnectionError($conn);
+        
+        $table = getenv(self::$dbtable);
+
+        $dbTitle = self::$title;
+        $dbNote = self::$note;
+        $dbOwnerID = self::$ownerID;
+        $dbDate = self::$date;
+
+        $sql = "UPDATE $table
+            SET $dbTitle = '$title', $dbNote = '$note2'
+            WHERE $dbOwnerID = '$userID' AND $dbDate = '$date'";
+
         $conn->query($sql);
 
         $conn->close();
@@ -50,7 +77,7 @@ class CalendarDatabase
         $dbOwnerID = self::$ownerID;
 
         $sql = "SELECT * FROM $table
-            WHERE $dbOwnerID = '$userID' && date = '$date'";
+            WHERE $dbOwnerID = '$userID' AND date = '$date'";
 
         $result = $conn->query($sql);
 
@@ -64,7 +91,7 @@ class CalendarDatabase
             return $note;
         }
 
-        throw new \Exception("Error Processing Request", 1);
+        throw new \Exception();
         
     }
 
@@ -83,7 +110,7 @@ class CalendarDatabase
     {
         if ($conn->connect_error) 
         {
-            die("Connection failed: " . $conn->connect_error . "<br>Please try again later or contact an administrator");
+            die($conn->connect_error);
         } 
     }
 }

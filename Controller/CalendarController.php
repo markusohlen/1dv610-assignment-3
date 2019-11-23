@@ -22,8 +22,28 @@ class CalendarController
         try {
             $note = $this->dayView->getNote();
             $date = $this->view->getDate();
-            var_dump($date);
+
             $this->db->saveNote($note, $this->sm->getUserID(), $date->getDate());
+            // Header("Location: " . \config\Constants::loginURL);
+        } 
+        catch (\model\NoteTooShortException $e) 
+        {
+            var_dump($e->getMessage());
+        }
+        catch (\model\TitleTooShortException $e) 
+        {
+            var_dump($e->getMessage());
+        }
+    }
+
+    public function updateNote() : void
+    {
+        try {
+            $note = $this->dayView->getNote();
+            $date = $this->view->getDate();
+
+            $this->db->updateNote($note, $this->sm->getUserID(), $date->getDate());
+            // Header("Location: " . \config\Constants::loginURL);
         } 
         catch (\model\NoteTooShortException $e) 
         {

@@ -5,6 +5,7 @@ namespace view;
 class DayView
 {
     private static $save = "DayView::SaveNote";
+    private static $update = "DayView::UpdateNote";
     private static $title = "DayView::Title";
     private static $note = "DayView::Note";
 
@@ -35,6 +36,11 @@ class DayView
         return isset($_POST[self::$save]);
     }
 
+    public function wantsToUpdateNote()
+    {
+        return isset($_POST[self::$update]);
+    }
+
     public function getNote()
     {
         return new \model\Note($this->getRequestTitle(), $this->getRequestNote());
@@ -56,9 +62,11 @@ class DayView
             $note = $this->cd->fetchNote($this->sm->getUserID(), $this->date->getDate());
             $title = $note->getTitle();
             $content = $note->getNote();
+            $saveButton = "<input type='submit' name='" . self::$update . "' value='Update'>";
         } catch (\Throwable $th) {
             $title = "";
             $content = "";
+            $saveButton = "<input type='submit' name='" . self::$save . "' value='Save'>";
         }
         
 		return "
@@ -74,7 +82,7 @@ class DayView
             <label for='" . self::$note . "'>Note</p>
             <textarea rows='4' cols='50' id='" . self::$note . "' name='" . self::$note . "' placeholder='Enter text here...'>$content</textarea>
             <br>
-            <input type='submit' name='" . self::$save . "' value='Save'>
+            $saveButton
         </form>
         
         <div class='day'>

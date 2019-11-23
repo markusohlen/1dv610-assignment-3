@@ -41,6 +41,7 @@ class MainController
 
     public function renderView() : void
     {
+        var_dump($_POST);
         if ($this->lv->userWantsToShowRegisterForm())
         {
             $this->showRegisterForm();
@@ -52,6 +53,10 @@ class MainController
         else if ($this->sm->getIsLoggedIn() === true && $this->dv->wantsToSaveNote() === true)
         {
             $this->saveNote();
+        }
+        else if ($this->sm->getIsLoggedIn() === true && $this->dv->wantsToUpdateNote() === true)
+        {
+            $this->updateNote();
         }
         else if ($this->sm->getIsLoggedIn() === true && $this->cv->wantsToShowDay() === true)
         {
@@ -77,7 +82,15 @@ class MainController
 
     private function saveNote() : void
     {
+        echo "<br>SAVE<br>";
         $this->cc->saveNote();
+        $this->v->render(true, $this->dv);
+    }
+
+    private function updateNote() : void
+    {
+        echo "<br>UPDATE<br>";
+        $this->cc->updateNote();
         $this->v->render(true, $this->dv);
     }
 
