@@ -17,50 +17,14 @@ class CalendarDatabase
     private static $dbport = 'DB_PORT';
     private static $dbtable = 'DB_CALENDAR_TABLE';
 
-    public function saveNote(\model\Note $note, $userID, string $date) : void 
+    public function saveNote(\model\Note $note, $userID, string $date, bool $wantsToUpdate = false) : void 
     {
-        $title = $note->getTitle();
-        $note2 = $note->getNote();
-
         $conn = $this->createConnection();
         
         $this->checkConnectionError($conn);
         
-        $table = getenv(self::$dbtable);
-
-        $dbTitle = self::$title;
-        $dbNote = self::$note;
-        $dbOwnerID = self::$ownerID;
-        $dbDate = self::$date;
-
-        $sql = "INSERT INTO $table ($dbTitle, $dbNote, $dbOwnerID, $dbDate)
-            VALUES ('$title', '$note2', '$userID', '$date')";
+        $sql = $this->getQuery($note, $userID, $date, $wantsToUpdate);
         
-        $conn->query($sql);
-
-        $conn->close();
-    }
-
-    public function updateNote(\model\Note $note, $userID, string $date) : void 
-    {
-        $title = $note->getTitle();
-        $note2 = $note->getNote();
-
-        $conn = $this->createConnection();
-        
-        $this->checkConnectionError($conn);
-        
-        $table = getenv(self::$dbtable);
-
-        $dbTitle = self::$title;
-        $dbNote = self::$note;
-        $dbOwnerID = self::$ownerID;
-        $dbDate = self::$date;
-
-        $sql = "UPDATE $table
-            SET $dbTitle = '$title', $dbNote = '$note2'
-            WHERE $dbOwnerID = '$userID' AND $dbDate = '$date'";
-
         $conn->query($sql);
 
         $conn->close();
@@ -75,9 +39,10 @@ class CalendarDatabase
         $table = getenv(self::$dbtable);
         
         $dbOwnerID = self::$ownerID;
+        $dbDate = self::$date;
 
         $sql = "SELECT * FROM $table
-            WHERE $dbOwnerID = '$userID' AND date = '$date'";
+            WHERE $dbOwnerID = '$userID' AND $dbDate = '$date'";
 
         $result = $conn->query($sql);
 
@@ -112,5 +77,31 @@ class CalendarDatabase
         {
             die($conn->connect_error);
         } 
+    }
+
+    private function getQuery(\model\Note $note, $userID, string $date, bool $wantsToUpdate) : string
+    {
+        var_dump($wantsToUpdate);
+        $title = $note->getTitle();
+        $note2 = $note->getNote();
+
+        $table = getenv(self::$dbtable);
+
+        $dbTitle = self::$title;
+        $dbNote = self::$note;
+        $dbOwnerID = self::$ownerID;
+        $dbDate = self::$date;
+
+        if ($wantsToUpdate === true)
+        {
+            return "UPDATE $table
+                SET $dbTitle = '$title', $dbNote = '$note2'
+                WHERE $dbOwnerID = '$userID' AND $dbDate = '$date'";
+        }
+        else
+        {
+            return "INSERT INTO $table ($dbTitle, $dbNote, $dbOwnerID, $dbDate)
+                VALUES ('$title', '$note2', '$userID', '$date')";
+        }
     }
 }

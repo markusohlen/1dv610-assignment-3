@@ -42,7 +42,8 @@ class CalendarController
             $note = $this->dayView->getNote();
             $date = $this->view->getDate();
 
-            $this->db->updateNote($note, $this->sm->getUserID(), $date->getDate());
+            //                                                                  true if you want to update
+            $this->db->saveNote($note, $this->sm->getUserID(), $date->getDate(), true);
             // Header("Location: " . \config\Constants::loginURL);
         } 
         catch (\model\NoteTooShortException $e) 

@@ -41,7 +41,6 @@ class MainController
 
     public function renderView() : void
     {
-        var_dump($_POST);
         if ($this->lv->userWantsToShowRegisterForm())
         {
             $this->showRegisterForm();
@@ -82,14 +81,12 @@ class MainController
 
     private function saveNote() : void
     {
-        echo "<br>SAVE<br>";
         $this->cc->saveNote();
         $this->v->render(true, $this->dv);
     }
 
     private function updateNote() : void
     {
-        echo "<br>UPDATE<br>";
         $this->cc->updateNote();
         $this->v->render(true, $this->dv);
     }
