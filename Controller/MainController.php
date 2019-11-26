@@ -51,11 +51,13 @@ class MainController
         }
         else if ($this->sm->getIsLoggedIn() === true && $this->dv->wantsToSaveNote() === true)
         {
-            $this->saveNote();
+            $wantsToUpdate = false;
+            $this->saveNote($wantsToUpdate);
         }
         else if ($this->sm->getIsLoggedIn() === true && $this->dv->wantsToUpdateNote() === true)
         {
-            $this->updateNote();
+            $wantsToUpdate = true;
+            $this->saveNote($wantsToUpdate);
         }
         else if ($this->sm->getIsLoggedIn() === true && $this->cv->wantsToShowDay() === true)
         {
@@ -79,15 +81,9 @@ class MainController
         $this->v->render(true, $this->cv);
     }
 
-    private function saveNote() : void
+    private function saveNote(bool $wantsToUpdate) : void
     {
-        $this->cc->saveNote();
-        $this->v->render(true, $this->dv);
-    }
-
-    private function updateNote() : void
-    {
-        $this->cc->updateNote();
+        $this->cc->saveNote($wantsToUpdate);
         $this->v->render(true, $this->dv);
     }
 

@@ -13,6 +13,7 @@ class DayView
     private $sm;
 
     private $date;
+    private $message = "";
 
     public function __construct(\model\CalendarDatabase $cd, \model\SessionModel $sm)
     {
@@ -51,6 +52,16 @@ class DayView
         $this->date = $date;
     }
 
+    public function setTooShortTitleMessage() : void
+    {
+        $this->message .= "Title is too short, should be at least " . \config\Constants::minTitleLength . " characters long";
+    }
+
+    public function setTooShortNoteMessage() : void
+    {
+        $this->message .= "Note is too short, should be at least " . \config\Constants::minNoteLength . " characters long";
+    }
+
 	/**
     * Generate HTML code for the day
     
@@ -64,6 +75,7 @@ class DayView
             $content = $note->getNote();
             $saveButton = "<input type='submit' name='" . self::$update . "' value='Update'>";
         } catch (\Throwable $th) {
+            var_dump($th);
             $title = "";
             $content = "";
             $saveButton = "<input type='submit' name='" . self::$save . "' value='Save'>";
@@ -74,6 +86,8 @@ class DayView
 
         <a href='" . \config\Constants::loginURL . "'>Back to calendar</a>
         <br>
+
+        <p>" . $this->message . "</p>
 
         <form method='post'>
             <label for='" . self::$title . "'>Title</p>

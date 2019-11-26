@@ -5,54 +5,34 @@ namespace controller;
 class CalendarController
 {
     private $view;
-    private $dayView;
+    private $dv;
     private $db;
     private $sm;
 
     public function __construct(\view\CalendarView $cv, \view\DayView $dv, \model\CalendarDatabase $db, \model\SessionModel $sm)
     {
         $this->view = $cv;
-        $this->dayView = $dv;
+        $this->dv = $dv;
         $this->db = $db;
         $this->sm = $sm;
     }
 
-    public function saveNote() : void
+    public function saveNote(bool $wantsToUpdate) : void
     {
         try {
-            $note = $this->dayView->getNote();
+            $note = $this->dv->getNote();
             $date = $this->view->getDate();
 
-            $this->db->saveNote($note, $this->sm->getUserID(), $date->getDate());
-            // Header("Location: " . \config\Constants::loginURL);
-        } 
-        catch (\model\NoteTooShortException $e) 
-        {
-            var_dump($e->getMessage());
+            $this->db->saveNote($note, $this->sm->getUserID(), $date->getDate(), $wantsToUpdate);
+            Header("Location: " . \config\Constants::loginURL);
         }
         catch (\model\TitleTooShortException $e) 
         {
-            var_dump($e->getMessage());
+            $this->dv->setTooShortTitleMessage();
         }
-    }
-
-    public function updateNote() : void
-    {
-        try {
-            $note = $this->dayView->getNote();
-            $date = $this->view->getDate();
-
-            //                                                                  true if you want to update
-            $this->db->saveNote($note, $this->sm->getUserID(), $date->getDate(), true);
-            // Header("Location: " . \config\Constants::loginURL);
-        } 
         catch (\model\NoteTooShortException $e) 
         {
-            var_dump($e->getMessage());
-        }
-        catch (\model\TitleTooShortException $e) 
-        {
-            var_dump($e->getMessage());
+            $this->dv->setTooShortNoteMessage();
         }
     }
 
