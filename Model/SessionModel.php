@@ -6,6 +6,7 @@ class SessionModel
 {
     private static $userID = __CLASS__ . "::UserID";
     private static $username = __CLASS__ . "::Username";
+    private static $month = __CLASS__ . "::Month";
 
     public function __construct()
     {
@@ -55,5 +56,21 @@ class SessionModel
     public function usernameIsSet() : bool
     {
         return isset($_SESSION[self::$username]);
+    }
+
+    // Month
+    public function setMonth(string $month) : void
+    {
+        $_SESSION[self::$month] = $month;
+    }
+
+    public function getMonth() : string
+    {
+        return $_SESSION[self::$month];
+    }
+
+    public function monthIsSet() : bool
+    {
+        return isset($_SESSION[self::$month]);
     }
 }

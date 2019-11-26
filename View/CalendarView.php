@@ -12,6 +12,13 @@ class CalendarView
 
     private $currentMonth;
 
+    private $sm;
+
+    public function __construct(\model\SessionModel $sm)
+    {
+        $this->sm = $sm;
+    }
+
     /**
 	 * Creates a HTML view view
      * 
@@ -55,10 +62,13 @@ class CalendarView
     public function setMonth() : void
     {
         $month = $this->getMonth();
-        if (isset($month))
-        {
-            $this->currentMonth = $month;
-        }
+
+        $this->sm->setMonth($month);
+
+        // if (isset($month))
+        // {
+        //     $this->currentMonth = $month;
+        // }
     }
 
 	/**
@@ -107,29 +117,32 @@ class CalendarView
 
     private function checkMonth() : void
     {
-        if ($this->currentMonth === null)
+        if ($this->sm->monthIsSet() === false)
         {
-            $this->currentMonth = date("m");
+            $month = date("m");
+            $this->sm->setMonth($month);
         }
     }
     
     private function generateDays(): string
     {
-        $m = "";
+        $ret = "";
+
+        $month = $this->sm->getMonth();
 
         $year = date("Y");
         
-        $days = cal_days_in_month(CAL_GREGORIAN, (int)$this->currentMonth, (int)$year);
+        $days = cal_days_in_month(CAL_GREGORIAN, (int)$this->sm->getMonth(), (int)$year);
 
         for ($i = 0; $i < $days; $i++)
         {
-            $d = $i + 1;
-            $m .= "
-                <a href='?" . self::$year . "=$year&amp;" . self::$month . "=$this->currentMonth&amp;" . self::$day . "=$d'><div class='calDay'>$d</div></a>
+            $day = $i + 1;
+            $ret .= "
+                <a href='?" . self::$year . "=$year&amp;" . self::$month . "=$month&amp;" . self::$day . "=$day'><div class='calDay'>$day</div></a>
             ";
         }
 
-        return $m;
+        return $ret;
     }
 
     private function generateMonthSelector() : string
@@ -138,8 +151,9 @@ class CalendarView
 
         for ($i = 1; $i <= 12; $i++) 
         {
+            // Generates the full name of a month ex. January
             $monthName = date("F", mktime(0, 0, 0, $i));
-            $ret .= "<option value='$i' " . $this->chooseDefault($i, $this->currentMonth) . ">$monthName</option>";
+            $ret .= "<option value='$i' " . $this->chooseDefault($i, $this->sm->getMonth()) . ">$monthName</option>";
         }
         return $ret;
     }

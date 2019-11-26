@@ -3,7 +3,7 @@
 namespace model;
 
 /**
- * Readonly data structure for a user
+ * Data structure for date
  */
 class Date
 {
