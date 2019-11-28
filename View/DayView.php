@@ -69,15 +69,23 @@ class DayView
 	*/
     private function generateDayHTML() : string 
     {
+        $title = "";
+        $content = "";
+        
         try {
             $note = $this->cd->fetchNote($this->sm->getUserID(), $this->date->getDate());
+
             $title = $note->getTitle();
             $content = $note->getNote();
+
             $saveButton = "<input type='submit' name='" . self::$update . "' value='Update'>";
         } catch (\Throwable $th) {
-            var_dump($th);
-            $title = "";
-            $content = "";
+            if ($this->wantsToSaveNote() === true || $this->wantsToUpdateNote() === true) 
+            {
+                $title = $this->getRequestTitle();
+                $content = $this->getRequestNote();
+            }
+            
             $saveButton = "<input type='submit' name='" . self::$save . "' value='Save'>";
         }
         
