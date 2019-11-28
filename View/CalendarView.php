@@ -64,11 +64,6 @@ class CalendarView
         $month = $this->getMonth();
 
         $this->sm->setMonth($month);
-
-        // if (isset($month))
-        // {
-        //     $this->currentMonth = $month;
-        // }
     }
 
 	/**

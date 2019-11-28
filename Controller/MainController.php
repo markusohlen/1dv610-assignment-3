@@ -78,7 +78,7 @@ class MainController
     private function changeCalendarDate() : void
     {
         $this->cc->doChangeDate();
-        $this->v->render(true, $this->cv);
+        $this->v->render(true, $this->lv);
     }
 
     private function saveNote(bool $wantsToUpdate) : void
