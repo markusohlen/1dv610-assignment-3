@@ -83,14 +83,15 @@ class MainController
 
     private function saveNote(bool $wantsToUpdate) : void
     {
+        $this->setDate();
+
         $this->cc->saveNote($wantsToUpdate);
         $this->v->render(true, $this->dv);
     }
 
     private function showDay() : void
     {
-        $date = $this->cv->getDate();
-        $this->dv->setDate($date);
+        $this->setDate();
 
         $this->v->render(true, $this->dv);
     }
@@ -99,5 +100,11 @@ class MainController
     {
         $this->lc->login();
         $this->v->render($this->sm->getIsLoggedIn(), $this->lv);
+    }
+
+    private function setDate()
+    {
+        $date = $this->cv->getDate();
+        $this->dv->setDate($date);
     }
 }

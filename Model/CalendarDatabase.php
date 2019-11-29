@@ -49,6 +49,7 @@ class CalendarDatabase
         if ($result->num_rows > 0) 
         {
             $item = $result->fetch_assoc();
+
             $note = new \model\Note($item[self::$title], $item[self::$note]);
             
             $conn->close();
@@ -56,7 +57,7 @@ class CalendarDatabase
             return $note;
         }
 
-        throw new \Exception();
+        throw new \model\NoteNotFoundException();
         
     }
 

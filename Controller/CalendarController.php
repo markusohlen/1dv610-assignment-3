@@ -21,6 +21,7 @@ class CalendarController
     {
         try {
             $note = $this->dv->getNote();
+            
             $date = $this->view->getDate();
 
             $this->db->saveNote($note, $this->sm->getUserID(), $date->getDate(), $wantsToUpdate);

@@ -79,16 +79,18 @@ class DayView
             $content = $note->getNote();
 
             $saveButton = "<input type='submit' name='" . self::$update . "' value='Update'>";
-        } catch (\Throwable $th) {
-            if ($this->wantsToSaveNote() === true || $this->wantsToUpdateNote() === true) 
-            {
-                $title = $this->getRequestTitle();
-                $content = $this->getRequestNote();
-            }
-            
+        } 
+        catch (\model\NoteNotFoundException $e) 
+        {
             $saveButton = "<input type='submit' name='" . self::$save . "' value='Save'>";
         }
-        
+
+        if ($this->wantsToSaveNote() === true || $this->wantsToUpdateNote() === true) 
+        {
+            $title = $this->getRequestTitle();
+            $content = $this->getRequestNote();
+        }
+
 		return "
         <h1>Day</h1>
 
