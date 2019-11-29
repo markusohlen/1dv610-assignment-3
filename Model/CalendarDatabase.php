@@ -82,7 +82,6 @@ class CalendarDatabase
 
     private function getQuery(\model\Note $note, $userID, string $date, bool $wantsToUpdate) : string
     {
-        var_dump($wantsToUpdate);
         $title = $note->getTitle();
         $note2 = $note->getNote();
 

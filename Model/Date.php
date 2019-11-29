@@ -23,9 +23,6 @@ class Date
         $year = $this->year;
         $month = $this->month;
         $day = $this->day;
-
-        var_dump(__CLASS__ . " : " . __LINE__);
-        var_dump($year, $month, $day);
         
         return "$year-$month-$day";
     }

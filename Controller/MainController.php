@@ -41,25 +41,37 @@ class MainController
 
     public function renderView() : void
     {
-        if ($this->lv->userWantsToShowRegisterForm())
+        if ($this->sm->getIsLoggedIn() === true)
+        {
+            $this->doLoggedInChecks();
+        }
+        else if ($this->lv->userWantsToShowRegisterForm())
         {
             $this->showRegisterForm();
         }
-        else if ($this->sm->getIsLoggedIn() === true && $this->cv->wantsToChangeCalendarDate() === true)
+        else
+        {
+            $this->login();
+        }
+    }
+
+    private function doLoggedInChecks() : void
+    {
+        if ($this->cv->wantsToChangeCalendarDate() === true)
         {
             $this->changeCalendarDate();
         }
-        else if ($this->sm->getIsLoggedIn() === true && $this->dv->wantsToSaveNote() === true)
+        else if ($this->dv->wantsToSaveNote() === true)
         {
             $wantsToUpdate = false;
             $this->saveNote($wantsToUpdate);
         }
-        else if ($this->sm->getIsLoggedIn() === true && $this->dv->wantsToUpdateNote() === true)
+        else if ($this->dv->wantsToUpdateNote() === true)
         {
             $wantsToUpdate = true;
             $this->saveNote($wantsToUpdate);
         }
-        else if ($this->sm->getIsLoggedIn() === true && $this->cv->wantsToShowDay() === true)
+        else if ($this->cv->wantsToShowDay() === true)
         {
             $this->showDay();
         }

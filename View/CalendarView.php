@@ -10,8 +10,6 @@ class CalendarView
     private static $month = "month";
     private static $day = "day";
 
-    private $currentMonth;
-
     private $sm;
 
     public function __construct(\model\SessionModel $sm)
