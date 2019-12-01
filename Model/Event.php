@@ -5,12 +5,12 @@ namespace model;
 /**
  * Readonly data structure for a user
  */
-class Note
+class Event
 {
     private $title;
     private $note;
 
-    public function __construct(string $title = "", string $note = "")
+    public function __construct(string $title, string $note)
     {
         $this->setTitle($title);
         $this->setNote($note);

@@ -17,20 +17,20 @@ class CalendarDatabase
     private static $dbport = 'DB_PORT';
     private static $dbtable = 'DB_CALENDAR_TABLE';
 
-    public function saveNote(\model\Note $note, $userID, string $date, bool $wantsToUpdate = false) : void 
+    public function saveEvent(\model\Event $event, $userID, string $date, bool $wantsToUpdate = false) : void 
     {
         $conn = $this->createConnection();
         
         $this->checkConnectionError($conn);
         
-        $sql = $this->getQuery($note, $userID, $date, $wantsToUpdate);
+        $sql = $this->getQuery($event, $userID, $date, $wantsToUpdate);
         
         $conn->query($sql);
 
         $conn->close();
     }
 
-    public function fetchNote($userID, $date) : \model\Note
+    public function fetchEvent($userID, $date) : \model\Event
     {
         $conn = $this->createConnection();
 
@@ -50,14 +50,14 @@ class CalendarDatabase
         {
             $item = $result->fetch_assoc();
 
-            $note = new \model\Note($item[self::$title], $item[self::$note]);
+            $event = new \model\Event($item[self::$title], $item[self::$note]);
             
             $conn->close();
         
-            return $note;
+            return $event;
         }
 
-        throw new \model\NoteNotFoundException();
+        throw new \model\EventNotFoundException();
         
     }
 
@@ -80,10 +80,10 @@ class CalendarDatabase
         } 
     }
 
-    private function getQuery(\model\Note $note, $userID, string $date, bool $wantsToUpdate) : string
+    private function getQuery(\model\Event $event, $userID, string $date, bool $wantsToUpdate) : string
     {
-        $title = $note->getTitle();
-        $note2 = $note->getNote();
+        $title = $event->getTitle();
+        $note = $event->getNote();
 
         $table = getenv(self::$dbtable);
 
@@ -95,13 +95,13 @@ class CalendarDatabase
         if ($wantsToUpdate === true)
         {
             return "UPDATE $table
-                SET $dbTitle = '$title', $dbNote = '$note2'
+                SET $dbTitle = '$title', $dbNote = '$note'
                 WHERE $dbOwnerID = '$userID' AND $dbDate = '$date'";
         }
         else
         {
             return "INSERT INTO $table ($dbTitle, $dbNote, $dbOwnerID, $dbDate)
-                VALUES ('$title', '$note2', '$userID', '$date')";
+                VALUES ('$title', '$note', '$userID', '$date')";
         }
     }
 }

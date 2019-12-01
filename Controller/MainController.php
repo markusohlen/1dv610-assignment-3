@@ -61,15 +61,15 @@ class MainController
         {
             $this->changeCalendarDate();
         }
-        else if ($this->dv->wantsToSaveNote() === true)
+        else if ($this->dv->wantsToSaveEvent() === true)
         {
             $wantsToUpdate = false;
-            $this->saveNote($wantsToUpdate);
+            $this->saveEvent($wantsToUpdate);
         }
-        else if ($this->dv->wantsToUpdateNote() === true)
+        else if ($this->dv->wantsToUpdateEvent() === true)
         {
             $wantsToUpdate = true;
-            $this->saveNote($wantsToUpdate);
+            $this->saveEvent($wantsToUpdate);
         }
         else if ($this->cv->wantsToShowDay() === true)
         {
@@ -93,11 +93,11 @@ class MainController
         $this->v->render(true, $this->lv);
     }
 
-    private function saveNote(bool $wantsToUpdate) : void
+    private function saveEvent(bool $wantsToUpdate) : void
     {
         $this->setDate();
 
-        $this->cc->saveNote($wantsToUpdate);
+        $this->cc->saveEvent($wantsToUpdate);
         $this->v->render(true, $this->dv);
     }
 

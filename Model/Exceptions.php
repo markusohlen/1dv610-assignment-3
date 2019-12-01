@@ -27,4 +27,4 @@ class TitleTooShortException extends \Exception {}
 
 class NoteTooShortException extends \Exception {}
 
-class NoteNotFoundException extends \Exception {}
+class EventNotFoundException extends \Exception {}

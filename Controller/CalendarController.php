@@ -17,14 +17,14 @@ class CalendarController
         $this->sm = $sm;
     }
 
-    public function saveNote(bool $wantsToUpdate) : void
+    public function saveEvent(bool $wantsToUpdate) : void
     {
         try {
-            $note = $this->dv->getNote();
+            $event = $this->dv->getEvent();
             
             $date = $this->view->getDate();
 
-            $this->db->saveNote($note, $this->sm->getUserID(), $date->getDate(), $wantsToUpdate);
+            $this->db->saveEvent($event, $this->sm->getUserID(), $date->getDate(), $wantsToUpdate);
             Header("Location: " . \config\Constants::loginURL);
         }
         catch (\model\TitleTooShortException $e) 

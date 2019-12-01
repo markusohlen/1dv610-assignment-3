@@ -4,8 +4,8 @@ namespace view;
 
 class DayView
 {
-    private static $save = "DayView::SaveNote";
-    private static $update = "DayView::UpdateNote";
+    private static $save = "DayView::SaveEvent";
+    private static $update = "DayView::UpdateEvent";
     private static $title = "DayView::Title";
     private static $note = "DayView::Note";
 
@@ -32,19 +32,19 @@ class DayView
 		return $response;
     }
 
-    public function wantsToSaveNote()
+    public function wantsToSaveEvent()
     {
         return isset($_POST[self::$save]);
     }
 
-    public function wantsToUpdateNote()
+    public function wantsToUpdateEvent()
     {
         return isset($_POST[self::$update]);
     }
 
-    public function getNote()
+    public function getEvent()
     {
-        return new \model\Note($this->getRequestTitle(), $this->getRequestNote());
+        return new \model\Event($this->getRequestTitle(), $this->getRequestNote());
     }
 
     public function setDate(\model\Date $date)
@@ -73,19 +73,19 @@ class DayView
         $content = "";
         
         try {
-            $note = $this->cd->fetchNote($this->sm->getUserID(), $this->date->getDate());
+            $event = $this->cd->fetchEvent($this->sm->getUserID(), $this->date->getDate());
 
-            $title = $note->getTitle();
-            $content = $note->getNote();
+            $title = $event->getTitle();
+            $content = $event->getNote();
 
             $saveButton = "<input type='submit' name='" . self::$update . "' value='Update'>";
         } 
-        catch (\model\NoteNotFoundException $e) 
+        catch (\model\EventNotFoundException $e) 
         {
             $saveButton = "<input type='submit' name='" . self::$save . "' value='Save'>";
         }
 
-        if ($this->wantsToSaveNote() === true || $this->wantsToUpdateNote() === true) 
+        if ($this->wantsToSaveEvent() === true || $this->wantsToUpdateEvent() === true) 
         {
             $title = $this->getRequestTitle();
             $content = $this->getRequestNote();
