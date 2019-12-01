@@ -66,7 +66,7 @@ class CalendarView
 
 	/**
     * Generate HTML code for the calendar
-    
+    *
 	* @return String - A html page as a string
 	*/
     private function generateCalendarHTML() : string 
@@ -112,11 +112,15 @@ class CalendarView
         
         $days = cal_days_in_month(CAL_GREGORIAN, (int)$this->sm->getMonth(), (int)$year);
 
+        $urlYear = self::$year;
+        $urlMonth = self::$month;
+        $urlDay = self::$day;
+
         for ($i = 0; $i < $days; $i++)
         {
             $day = $i + 1;
             $ret .= "
-                <a href='?" . self::$year . "=$year&amp;" . self::$month . "=$month&amp;" . self::$day . "=$day'><div class='calDay'>$day</div></a>
+                <a href='?$urlYear=$year&amp;$urlMonth=$month&amp;$urlDay=$day'><div class='calDay'>$day</div></a>
             ";
         }
 

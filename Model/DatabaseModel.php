@@ -130,7 +130,7 @@ class DatabaseModel
     {
         if ($conn->connect_error) 
         {
-            die("Connection failed: " . $conn->connect_error . "<br>Please try again later or contact an administrator");
+            die("Connection failed: $conn->connect_error");
         } 
     }
 }

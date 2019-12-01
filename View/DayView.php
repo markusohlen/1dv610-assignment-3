@@ -64,7 +64,7 @@ class DayView
 
 	/**
     * Generate HTML code for the day
-    
+    *
 	* @return String - A html page as a string
 	*/
     private function generateDayHTML() : string 
@@ -104,7 +104,7 @@ class DayView
             <input name='" . self::$title . "' id='" . self::$title . "' type='text' value='$title'>
             <br>
             <label for='" . self::$note . "'>Note</p>
-            <textarea rows='4' cols='50' id='" . self::$note . "' name='" . self::$note . "' placeholder='Enter text here...'>$content</textarea>
+            <textarea rows='4' cols='50' id='" . self::$note . "' name='" . self::$note . "'>$content</textarea>
             <br>
             $saveButton
         </form>

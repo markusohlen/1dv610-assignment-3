@@ -47,7 +47,6 @@ class RegisterView
 		return $this->userFilledInUsername() && $this->userFilledInPassword() && $this->userFilledInPasswordRepeat();
     }
 
-    // Messages
     public function setMissingCredentialsMessage() : void
     {
         $minUsernameLength = \config\Constants::minUsernameLength;
