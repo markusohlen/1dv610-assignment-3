@@ -121,7 +121,6 @@ class LoginView
 				<p id="' . self::$messageId . '">' . $this->message .'</p>
 				<input type="submit" name="' . self::$logout . '" value="logout"/>
 			</form>
-			
 		';
 	}
 	

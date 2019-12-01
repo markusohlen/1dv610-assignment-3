@@ -93,21 +93,6 @@ class CalendarView
 		";
     }
 
-    private function getRequestYear(): string
-    {
-        return $_GET[self::$year];
-    }
-
-    private function getRequestMonth(): string
-    {
-        return $_GET[self::$month];
-    }
-
-    private function getRequestDay(): string
-    {
-        return $_GET[self::$day];
-    }
-
     private function checkMonth() : void
     {
         if ($this->sm->monthIsSet() === false)
@@ -158,5 +143,20 @@ class CalendarView
             return "selected='true'";
         }
         return '';
+    }
+    
+    private function getRequestYear(): string
+    {
+        return $_GET[self::$year];
+    }
+
+    private function getRequestMonth(): string
+    {
+        return $_GET[self::$month];
+    }
+
+    private function getRequestDay(): string
+    {
+        return $_GET[self::$day];
     }
 }

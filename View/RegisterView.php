@@ -10,7 +10,7 @@ class RegisterView
     private static $password = "RegisterView::Password";
 	private static $passwordRepeat = "RegisterView::PasswordRepeat";
 	
-	private $message = '';
+	private $message = "";
     
 	/**
     * Generate HTML code for the register view
@@ -39,9 +39,7 @@ class RegisterView
         $password = $this->getRequestPassword();
         $passwordRepeat = $this->getRequestPasswordRepeat();
 
-        $t = new \model\RegisterNewUser($username, $password, $passwordRepeat);
-
-        return $t;
+        return new \model\RegisterNewUser($username, $password, $passwordRepeat);
     }
 
     public function userFilledInCredentials() : bool 
@@ -125,21 +123,6 @@ class RegisterView
 		';
     }
 
-    private function getRequestUsername() : string
-    {
-        return $_POST[self::$username];
-    }
-
-    private function getRequestPassword() : string
-    {
-        return $_POST[self::$password];
-    }
-
-    private function getRequestPasswordRepeat() : string
-    {
-        return $_POST[self::$passwordRepeat];
-    }
-
     private function userFilledInUsername() : bool 
     {
         if (isset($_POST[self::$username]) && empty($_POST[self::$username]) === false) 
@@ -165,5 +148,20 @@ class RegisterView
 			return true;
 		}
 		return false;
+    }
+
+    private function getRequestUsername() : string
+    {
+        return $_POST[self::$username];
+    }
+
+    private function getRequestPassword() : string
+    {
+        return $_POST[self::$password];
+    }
+
+    private function getRequestPasswordRepeat() : string
+    {
+        return $_POST[self::$passwordRepeat];
     }
 }
