@@ -14,6 +14,7 @@ class SessionModel
         assert(session_status() === PHP_SESSION_ACTIVE);
     }
 
+    // Sessions for authentication
     public function setUserID(int $id) : void 
     {
         $_SESSION[self::$userID] = $id;
@@ -38,6 +39,7 @@ class SessionModel
         return false;
     }
 
+    // Sessions for keeping username after registration to next view
     public function setUsername(string $username) : void
     {
         $_SESSION[self::$username] = $username;
@@ -58,7 +60,7 @@ class SessionModel
         return isset($_SESSION[self::$username]);
     }
 
-    // Month
+    // Sessions for keeping month after reloads
     public function setMonth(string $month) : void
     {
         $_SESSION[self::$month] = $month;
